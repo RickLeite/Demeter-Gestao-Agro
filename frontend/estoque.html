@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Estoque</title>
+    <link rel="stylesheet" href="estoque.css">
+    <!-- Adicionando a biblioteca Font Awesome para usar o ícone -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+<body>
+    <header>
+        <!-- Botão "Voltar" adicionado no header -->
+        <button id="voltar" class="btn-voltar">
+            <i class="fas fa-arrow-left"></i> Voltar
+        </button>
+        <h1>Controle de Estoque</h1>
+    </header>
+
+    <section id="cadastro" class="cadastro">
+        <h2>Cadastrar Novos Produtos</h2>
+        <form id="form-cadastro">
+            <label for="nome-produto">Nome do Produto:</label>
+            <input type="text" id="nome-produto" required>
+
+            <label for="quantidade">Quantidade:</label>
+            <input type="number" id="quantidade" required>
+
+            <label for="valor-unitario">Valor Unitário (R$):</label>
+            <input type="number" id="valor-unitario" required step="0.01">
+
+            <button type="submit" id="cadastrar-button">Cadastrar</button>
+        </form>
+    </section>
+
+    <section id="controle" class="controle">
+        <h2>Painel de Controle</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Produto</th>
+                    <th>Quantidade</th>
+                    <th>Valor Unitário (R$)</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody id="lista-produtos">
+                <!-- Produtos serão adicionados aqui dinamicamente com JavaScript -->
+            </tbody>
+        </table>
+    </section>
+
+    <section id="dashboard" class="dashboard">
+        <h2>Dashboard</h2>
+        <p>Quantidade de Produtos: <span id="quantidade-produtos">0</span</p>
+        <p>Valor Total do Estoque: R$ <span id="valor-total">0.00</span></p>
+        <a href="grafico.html" id="botao-dashboard">Ver Gráfico</a>
+        <a href="#" id="botao-gerar-planilha">Gerar Planilha</a>
+    </section>
+
+    <script src="estoque.js"></script>
+</body>
+</html>

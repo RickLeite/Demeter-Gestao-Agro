@@ -1,0 +1,133 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F5F5F5;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column; /* Configuração para o fluxo de elementos verticalmente */
+    min-height: 100vh; /* 100% da altura da viewport */
+}
+/* Estilos para o cabeçalho */
+.header {
+    background-color: #2E7D32;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    font-size: 24px;
+}
+.main-content {
+    flex: 1; /* Isso fará com que este elemento cresça e ocupe todo o espaço disponível */
+}
+
+
+.header h1 {
+    color: #fff; /* Altera a cor do texto para amarelo */
+}
+
+.menu-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px; /* Adiciona espaço na altura do menu */
+}
+
+.menu-list li {
+    margin-right: 20px;
+}
+
+.menu-list a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.menu-list a:hover {
+    color: #228B22;
+}
+
+/* Estilos para o contêiner principal */
+.container {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    text-align: center;
+    color: #2E7D32;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="date"] {
+    width: 98%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 16px;
+}
+
+button {
+    background-color: #2E7D32;
+    color: #fff;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s;
+    display: block;
+    margin: 0 auto; /* Centraliza o botão horizontalmente */
+    margin-bottom: 20px; /* Adiciona espaço na altura do botão */
+}
+
+button:hover {
+    background-color: #228B22;
+}
+
+footer {
+    text-align: center;
+    background-color: #2E7D32;
+    color: #fff;
+    padding: 15px 0;
+    box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.1);
+}
+.btn-voltar {
+    background-color: transparent;
+    border: none;
+    color: #fff; /* Mudança para branco para ser visível no fundo verde */
+    position: absolute; /* Adicionado para posicionar o botão no canto superior esquerdo */
+    top: 15px; /* Ajuste conforme necessário */
+    left: 15px; /* Ajuste conforme necessário */
+    font-size: 16px;
+}
+
+.btn-voltar i {
+    margin-right: 5px;
+}
+
+.btn-voltar:hover {
+    color: #aaa; /* Mudança para um tom de cinza quando o mouse estiver sobre ele */
+}
+.btn-voltar:hover {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    text-decoration: none;
+}

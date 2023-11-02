@@ -1,0 +1,154 @@
+/* Reset padrão para alguns elementos */
+body, h1, h2, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+header {
+    background-color: #2E7D32;
+    color: #fff;
+    text-align: center;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    padding: 9px; /* Adicione mais preenchimento para aumentar o tamanho */
+    margin-bottom: -70px; /* Aumente a margem inferior para separá-lo do conteúdo do corpo */
+}
+
+header h1 {
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
+
+/* Estilos de navegação */
+nav ul {
+    list-style: none;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #5cb85c;
+}
+
+/* Estilos de login */
+.login-container {
+    display: flex;
+    margin: 85px auto;
+    max-width: 800px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.login-image {
+    flex: 1;
+    min-width: 10%;
+}
+
+.login-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.login-box {
+    flex: 1;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 30px;
+}
+
+.login-box h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-box input, .login-box button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+}
+
+.login-box input {
+    background-color: #f1f1f1;
+}
+
+.login-box button {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+.login-box button:hover {
+    background-color: #45a049;
+}
+
+/* Estilos auxiliares */
+.forgot-password, .register-prompt {
+    text-align: center;
+    margin: 10px 0 20px;
+}
+
+.forgot-password a, .register-prompt a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.forgot-password a:hover, .register-prompt a:hover {
+    text-decoration: underline;
+}
+
+.login-box input,
+.login-box button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Estilos para posicionar o footer no final da tela */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.login-container {
+    flex-grow: 1;
+}
+
+footer {
+    text-align: center;
+    background-color: #2E7D32;
+    color: #fff;
+    margin-top: 20px;
+    padding: 19px 0;
+    box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.1);
+}

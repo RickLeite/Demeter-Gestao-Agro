@@ -1,0 +1,51 @@
+/* Estilos gerais */
+html, body {
+    height: 100%;  /* Adicionado para garantir que ocupem toda a altura da janela do navegador */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    display: flex;  /* Adicionado para ativar o flexbox */
+    flex-direction: column;  /* Dispor os elementos verticalmente */
+}
+
+/* Estilos para o cabeçalho */
+header {
+    background-color: #2E7D32;
+    color: #fff;
+    padding: 2px 0;
+    text-align: center;
+}
+
+/* Estilos para a seção de gráfico */
+.dashboard {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    flex: 1;  /* Adicionado para fazer esta seção crescer e ocupar o espaço disponível */
+}
+
+/* Estilos para o contêiner do gráfico */
+.chart-container {
+    width: 80%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+footer {
+    text-align: center;
+    background-color: #2E7D32;
+    color: #fff;
+    padding: 3px 0;
+    box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.1);
+}

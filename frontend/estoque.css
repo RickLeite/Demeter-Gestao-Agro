@@ -1,0 +1,186 @@
+/* Estilos para o cabeçalho */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F5F5F5; /* Cor de fundo suave */
+    margin: 0;
+    padding: 0;
+}
+header {
+    background-color: #2E7D32; /* Verde escuro */
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    position: relative; /* Adicionado para posicionar o botão de voltar */
+}
+
+.btn-voltar {
+    background-color: transparent;
+    border: none;
+    color: #fff; /* Mudança para branco para ser visível no fundo verde */
+    position: absolute; /* Adicionado para posicionar o botão no canto superior esquerdo */
+    top: 15px; /* Ajuste conforme necessário */
+    left: 15px; /* Ajuste conforme necessário */
+    font-size: 16px;
+}
+
+.btn-voltar i {
+    margin-right: 5px;
+}
+
+.btn-voltar:hover {
+    color: #aaa; /* Mudança para um tom de cinza quando o mouse estiver sobre ele */
+}
+
+.menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.menu a:hover {
+    color: #000000; /* Verde mais claro no hover */
+}
+
+/* Estilos para cada seção */
+.cadastro, .controle, .dashboard {
+    background-color: #fff; /* Fundo branco para destacar o conteúdo */
+    padding: 20px;
+    margin: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Sutil sombra */
+}
+
+/* Estilos para o cabeçalho de cada seção */
+.cadastro h2, .controle h2, .dashboard h2 {
+    color: #2E7D32; /* Verde escuro */
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Estilos para o formulário de cadastro */
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 16px;
+}
+
+button[type="submit"] {
+    background-color: #2E7D32; /* Verde escuro */
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #228B22; /* Verde mais claro no hover */
+}
+
+/* Estilos para a tabela de controle */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #2E7D32; /* Verde escuro */
+    color: #fff;
+}
+
+/* Estilos para os botões de edição e exclusão (adicionado) */
+.editar-button,
+.excluir-button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 5px;
+    transition: background-color 0.3s;
+}
+
+.editar-button {
+    background-color: #4287f5; /* Azul */
+    color: #fff;
+}
+
+.excluir-button {
+    background-color: #f54242; /* Vermelho */
+    color: #fff;
+}
+
+.editar-button:hover {
+    background-color: #3366b0; /* Azul mais claro no hover */
+}
+
+.excluir-button:hover {
+    background-color: #d33939; /* Vermelho mais claro no hover */
+}
+
+/* Estilos para o botão "Ver Gráfico" dentro da seção de dashboard */
+#botao-dashboard {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #2E7D32; /* Verde escuro */
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 3px;
+    margin-right: 10px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+#botao-dashboard:hover {
+    background-color: #228B22; /* Verde mais claro no hover */
+}
+
+/* Estilos para o botão "Gerar Planilha" dentro da seção de dashboard */
+#botao-gerar-planilha {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4287f5; /* Azul */
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 3px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+#botao-gerar-planilha:hover {
+    background-color: #3366b0; /* Azul mais claro no hover */
+}

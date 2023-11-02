@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucros e Gastos </title>
+    <link rel="stylesheet" href="lucrosGastos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <button id="voltar" class="btn-voltar">
+            <i class="fas fa-arrow-left"></i> Voltar
+        </button>
+        <h1>Lucros e Gastos</h1>
+    </header>
+
+    <div class="main-content">
+        <section class="container">
+            <div class="header">
+                <h2>Lucros e Gastos</h2>
+                <input type="text" placeholder="Pesquisar">
+                <button id="btnPesquisarLucrosGastos">🔍</button>
+
+
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Produtos mais vendidos </th>
+                        <th>Produtos menos vendidos </th>
+                        <th>Lista de lucros e gastos / anos </th>
+                        <th>Lista de lucros e gastos / diarios</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Dados dos clientes serão inseridos aqui pelo JS -->
+                </tbody>
+            </table>
+        </section>
+
+        <section id="gerarRelatorios" class="gerarRelatorios">
+            <button>Gerar Relatório em .CSV</button>
+            <button>Gerar Relatório em PDF</button>      
+          </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Deméter</p>
+    </footer>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
+        <script src="lucrosGastos.js"></script>
+</body>
+
+</html>
