@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Vendas</title>
+    <link rel="stylesheet" href="cadastro-vendas.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <button id="voltar" class="btn-voltar">
+            <i class="fas fa-arrow-left"></i> Voltar
+        </button>
+        <h1>Cadastrar Vendas</h1>
+    </header>
+
+    <section id="cadastrarVenda" class="cadastrarVenda">
+        <h2>Cadastrar Novas Vendas</h2>
+        <form id="form-cadastro">
+            <div class="produto">
+                <label for="nome-produto">Nome do Produto:</label>
+                <input type="text" class="nome-produto" required>
+
+                <label for="quantidade">Quantidade:</label>
+                <input type="number" class="quantidade" required>
+
+                <label for="valor-unitario">Valor Unitário (R$):</label>
+                <input type="number" class="valor-unitario" required step="0.01">
+            </div>
+
+            <label for="nome-cliente">Nome do Cliente:</label>
+            <input type="text" id="nome-cliente" required>
+
+            <!-- Campo de CNPJ -->
+            <label for="cnpj">CNPJ:</label>
+            <input type="text" id="cnpj" required>
+
+            <label for="saleDate">Data De Venda:</label>
+            <input type="date" id="saleDate" required>
+
+            <button type="button" id="btn-adicionar-produtos">Adicionar Produto</button>
+            <button type="submit">Cadastrar</button>
+        </form>
+    </section>
+
+    <section id="valorTotal" class="valorTotal">
+        <h2>Valor Total da Venda</h2>
+        <div class="valor-total">
+            <label for="total">Total:</label>
+            <span id="total">R$ 0.00</span>
+            <!-- Botão de Emitir Nota Fiscal -->
+            <button id="btn-emitir-nota" class="btn-nota">Emitir Nota Fiscal</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Deméter</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+
+
+    <script src="cadastro-vendas.js"></script>
+</body>
+
+</html>

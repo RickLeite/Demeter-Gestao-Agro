@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deméter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <h1>Deméter</h1>
+        <nav>
+            <ul>
+                <li><a href="#sobre">Sobre Nós</a></li>
+                <li><a href="#produtos">Produtos</a></li>
+                <li><a href="registro.html">Cadastro</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="main-content">
+        <section id="inicio">
+            <h2>Bem-vindo ao Deméter</h2>
+            <p>Oferecemos produtos agrícolas de alta qualidade para atender às suas necessidades.</p>
+        </section>
+
+        <section id="sobre">
+            <div id="sobre-nos">
+                <div class="sobre-nos-container">
+                    <div class="imagem-container">
+                        <img src="imagem/agro.jpg" alt="Imagem de Login">
+                    </div>
+                    <div class="texto-container">
+                        <h2>Sobre nós</h2>
+                        <p>Texto descrevendo sobre a empresa ou sobre o site...</p>
+                        <div class="contact-container">
+
+                            <div class="contact-item">
+                                <img src="imagem/iconiEmail.png" alt="Ícone de E-mail">
+                                <span>E-MAIL</span>
+                                <p>Tem alguma dúvida?</p>
+                                <a href="mailto:demeter@gmail.com">demeter@gmail.com</a>
+                            </div>
+
+                            <div class="contact-item">
+                                <img src="imagem/iconiTelefone.png" alt="Ícone de Telefone">
+                                <span>TELEFONE</span>
+                                <p>Você pode ligar para gente !!!</p>
+                                <span>(00) 0000-0000</span>
+                            </div>
+
+                            <div class="contact-item">
+                                <img src="imagem/iconiRobo.png" alt="Ícone de Chat">
+                                <span>CHAT</span>
+                                <p>Use nosso chat de suporte</p>
+                                <button id="open-chatbot-btn">Abrir Chat</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="produtos">
+            <h2>Nossos Produtos</h2>
+            <div class="produtos-container">
+
+                <div class="produto-item">
+                    <h3>Controle De Estoque</h3>
+                    <img src="/imagem/controleEstoque.png" alt="controle estoque">
+                    <a href="nossosProdutos.html">Saiba mais</a>
+                </div>
+
+                <div class="produto-item">
+                    <h3>Controle Financeiro</h3>
+                    <img src="/imagem/controleEstoque.png" alt="controle financeiro">
+                    <a href="nossosProdutos.html">Saiba mais</a>
+                </div>
+
+                <div class="produto-item">
+                    <h3>Interface Amigável</h3>
+                    <img src="/imagem/controleEstoque.png" alt="interface">
+                    <a href="nossosProdutos.html">Saiba mais</a>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="comentarios">
+            <h2>Comentários dos Usuários</h2>
+            <div class="comentarios-container" id="area-comentarios">
+
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Deméter</p>
+    </footer>
+
+    <div class="chatbot" id="chatbot-container">
+        <div class="chat-header">
+            <span class="chat-title">Suporte</span>
+            <button class="close-btn" onclick="closeChat()">✕</button>
+        </div>
+        <div class="messages">
+            <p class="bot-message">Olá! Escolha um tema de dúvida:</p>
+        </div>
+        <div class="options">
+            <button onclick="selectTheme(1)">A</button>
+            <button onclick="selectTheme(2)">B</button>
+            <button onclick="selectTheme(3)">C</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

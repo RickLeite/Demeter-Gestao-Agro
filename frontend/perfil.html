@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil do Usuário</title>
+    <!-- Link atualizado do Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+    <link rel="stylesheet" href="perfil.css">
+</head>
+
+<body>
+    <header class="header">
+        <h1>Perfil do Usuário</h1>
+        <button class="exit-button">
+            <i class="fas fa-sign-out-alt"></i> Sair
+        </button>
+    </header>
+    <div class="main-content">
+        <section id="informacaoPerfil" class="informacaoPerfil">
+            <div class="user-image-container">
+                <img id="user-image" src="avatar.jpg" alt="Minha Foto de Perfil" class="user-image">
+                <label for="user-image-upload" class="upload-button">Alterar Foto</label>
+                <input type="file" id="user-image-upload" accept="image/*" style="display: none;">
+                <button onclick="redirectToPage()" class="feedback-button">Feedback</button>
+
+            </div>
+            <div class="user-details">
+                <h1 class="user-name"><span id="nomeUsuario"></span></h1>
+                <p class="user-email"><span id="emailUsuario"></span></p>
+            </div>
+            
+            
+        </section>
+        
+        <section id="botoes" class="botoes">
+            <button class="botao" id="btnEstoque">Controle de Estoque</button>
+            <button class="botao" id="btnFinanceiro">Registro de Despesas</button>
+            <button class="botao" id="btnCadastrarClientes">Cadastrar Clientes</button>
+            <button class="botao" id="btnListaProdutos">Lista de Produtos</button>
+            <button class="botao" id="btnCadastrarVendas">Cadastrar Vendas</button>
+            <button class="botao" id="btnListaClientes">Lista de Clientes</button>
+            <button class="botao" id="btnHistoricoVendas">Histórico de Vendas</button>
+            <button class="botao" id="btnLucrosGastos">Lucros e Gastos</button>
+        </section>
+    </div>
+    
+    <footer class="footer">
+        <p>&copy; 2023 Deméter</p>
+    </footer>
+    
+    <script src="perfil.js"></script>
+</body>
+</html>

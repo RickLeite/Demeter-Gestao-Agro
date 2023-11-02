@@ -1,0 +1,153 @@
+/* Estilos gerais */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos para o cabeçalho */
+header {
+    background-color: #2E7D32;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    font-size: 20px;
+}
+.main-content {
+    flex: 1; /* Isso fará com que este elemento cresça e ocupe todo o espaço disponível */
+}
+
+/* Estilos para o contêiner principal */
+.containerdespesa-section, .containerdetalhes-despesa {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+
+
+.despesa-section h2 {
+    color: #2E7D32;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+input[type="date"],
+input[type="number"],
+input[type="text"],
+input[type="checkbox"],
+input[type="file"] {
+        width: 99%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        font-size: 16px;
+    
+}
+
+.anexo-label {
+    display: block;
+    font-weight: bold;
+}
+
+.botao-pago {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.botao-pago button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+#btn-nao-pago {
+    background-color: #FF0000;
+    color: #fff;
+    margin-right: 10px;
+}
+
+#btn-pago {
+    background-color: #2E7D32;
+    color: #fff;
+}
+
+#botao-cadastrar-despesa {
+    background-color: #2E7D32;
+    color: #fff;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s;
+}
+
+#botao-cadastrar-despesa:hover {
+    background-color: #228B22;
+}
+
+
+.detalhes-despesa h2 {
+    color: #2E7D32;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+
+.botoes-registro button {
+    background-color: #2E7D32;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 10px;
+    transition: background-color 0.3s;
+}
+
+.botoes-registro button:hover {
+    background-color: #228B22;
+}
+
+/* Estilos para o rodapé */
+footer {
+    background-color: #2E7D32;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+}
+.btn-voltar {
+    background-color: transparent;
+    border: none;
+    color: #fff; /* Mudança para branco para ser visível no fundo verde */
+    position: absolute; /* Adicionado para posicionar o botão no canto superior esquerdo */
+    top: 15px; /* Ajuste conforme necessário */
+    left: 15px; /* Ajuste conforme necessário */
+    font-size: 16px;
+}
+
+.btn-voltar i {
+    margin-right: 5px;
+}
+
+.btn-voltar:hover {
+    color: #aaa; /* Mudança para um tom de cinza quando o mouse estiver sobre ele */
+}

@@ -1,0 +1,173 @@
+/* Estilos gerais */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos para o cabeçalho */
+header {
+    background-color: #2E7D32;
+    color: #fff;
+    padding: 3px 0;
+    text-align: center;
+}
+
+/* Estilos para o menu */
+.menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.menu a:hover {
+    color: #228B22;
+}
+
+/* Estilos para o menu suspenso */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: #2E7D32;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.dropbtn:hover {
+    background-color: #228B22;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+    color: #2E7D32;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Estilos para cada seção */
+.cadastrarVenda, .valorTotal {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para o cabeçalho de cada seção */
+.cadastrarVenda h2, .controle h2, .valorTotal h2 {
+    color: #2E7D32;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Estilos para o formulário de cadastro */
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+input[type="date"],
+input[type="text"],
+input[type="number"] {
+    width: 99%;
+    padding: 10px;
+    margin-bottom: 21px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 16px;
+}
+
+button[type="submit"], #btn-adicionar-produtos ,.btn-nota{
+    background-color: #2E7D32;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover, #btn-adicionar-produtos:hover {
+    background-color: #228B22;
+}
+
+
+footer {
+    text-align: center;
+    background-color: #2E7D32;
+    color: #fff;
+    padding: 1px 0;
+    box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.1);
+}
+.btn-voltar {
+    background-color: transparent;
+    border: none;
+    color: #fff; /* Mudança para branco para ser visível no fundo verde */
+    position: absolute; /* Adicionado para posicionar o botão no canto superior esquerdo */
+    top: 15px; /* Ajuste conforme necessário */
+    left: 15px; /* Ajuste conforme necessário */
+    font-size: 16px;
+}
+
+.btn-voltar i {
+    margin-right: 5px;
+}
+
+.btn-voltar:hover {
+    color: #aaa; /* Mudança para um tom de cinza quando o mouse estiver sobre ele */
+}
+.section-header {
+    position: relative; 
+    padding-right: 150px; /* Reserva espaço para o botão. Ajuste conforme necessário. */
+}
+
+#form-cadastro button {
+    display: inline-block;
+    margin-right: 10px;
+
+}
+.btn-nota {
+    margin-left: auto;
+    display: block;
+}
