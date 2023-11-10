@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("emailUsuario").textContent = "E-mail: " + emailUsuario;
 
     document.getElementById('btnEstoque').addEventListener('click', function() {
-        window.location.href = 'estoque.html';
+        window.location.href = 'src/estoque/estoque.html';
     });
 
     document.getElementById('btnFinanceiro').addEventListener('click', function() {
