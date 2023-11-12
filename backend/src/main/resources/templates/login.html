@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Deméter</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+</head>
+
+<body>
+<header>
+    <h1>Deméter</h1>
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">Início</a></li>
+            <li><a th:href="@{/nossos-produtos}">Produtos</a></li>
+            <li><a th:href="@{/registro}">Cadastro</a></li>
+            <li><a th:href="@{/login}">Login</a></li>
+        </ul>
+    </nav>
+</header>
+<div class="login-container">
+    <div class="login-image">
+        <img th:src="@{/img/agro.jpg}" alt="Imagem de Login">
+    </div>
+    <div class="login-box">
+        <h2>Login</h2>
+        <!-- ID "form-login" adicionado ao formulário -->
+        <form action="#" method="post" id="form-login">
+            <!-- ID adicionado ao input de usuário -->
+            <input type="text" placeholder="Usuário" name="username" id="username" required>
+            <!-- ID adicionado ao input de senha -->
+            <input type="password" placeholder="Senha" name="password" id="password" required>
+            <button type="submit">Entrar</button>
+            <br>
+        </form>
+        <p class="register-prompt">Não possui uma conta? <a th:href="@{/registro}">Clique aqui</a>.</p>
+    </div>
+</div>
+<footer>
+    <p>&copy; 2023 Deméter</p>
+</footer>
+<script th:src="@{/js/login.js}"></script>
+</body>
+
+</html>

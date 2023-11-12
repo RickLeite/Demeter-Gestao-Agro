@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Clientes</title>
+    <link rel="stylesheet" th:href="@{/css/listaProdutos.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+
+<body>
+<header>
+    <button id="voltar" class="btn-voltar">
+        <i class="fas fa-arrow-left"></i> Voltar
+    </button>
+    <h1>Lista de clientes</h1>
+</header>
+
+<div class="main-content">
+    <section class="container">
+        <div class="header">
+            <h2>Lista de</h2>
+            <input type="text" placeholder="Insira o Id do cliente">
+            <button id="btnSearch">🔍</button>
+        </div>
+        <table>
+            <thead>
+            <tr>
+                <th>Id do cliente</th>
+                <th>Nome do cliente</th>
+                <th>Data de nascimento</th>
+                <th>CPF</th>
+                <th>Nome da empresa</th>
+                <th>CNPJ</th>
+                <th>Ação</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Os dados dos clientes serão inseridos aqui pelo JS -->
+            </tbody>
+        </table>
+    </section>
+
+    <section id="gerarRelatorios" class="gerarRelatorios">
+        <button>Gerar Relatório em .CSV</button>
+        <button>Gerar Relatório em PDF</button>
+    </section>
+</div>
+
+<footer>
+    <p>&copy; 2023 Deméter</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+<script th:src="@{/js/listaClientes.js}"></script>
+</body>
+
+</html>

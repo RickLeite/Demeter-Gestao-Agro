@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nossos Produtos - Deméter</title>
+    <link rel="stylesheet" th:href="@{css/nossosProdutos.css}">
+</head>
+<body>
+    <header>
+        <h1>Deméter</h1>
+        <nav>
+            <ul>
+                <li><a th:href="@{/}">Início</a></li>
+                <li><a href="#produtos" class="active">Nossos Produtos</a></li>
+                <li><a th:href="@{/registro}">Cadastro</a></li>
+                <li><a th:href="@{/login}">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="produtos">
+            <h2>Nossos Produtos</h2>
+            <div class="product-container">
+                <section class="product-item">
+                    <img th:src="@{/img/controleEstoque.png}" alt="Ícone de Controle de Estoque">
+                    <h3 class="product-title">Controle De Estoque</h3>
+                    <p>
+                        Monitoramento em tempo real das tendências de vendas. Dashboard personalizado para análise do estoque. Transformamos os dados em uma plataforma de controle eficiente.
+                    </p>
+                </section>
+
+                <section class="product-item">
+                    <img th:src="@{/img/controleEstoque.png}" alt="Ícone de Controle Financeiro">
+                    <h3 class="product-title">Controle Financeiro</h3>
+                    <p>
+                        Acompanhamento de despesas e lucros. Disponibiliza relatórios personalizados para ajudar na tomada de decisão.
+                    </p>
+                </section>
+
+                <section class="product-item">
+                    <img th:src="@{/img/iconiRobo.png}" alt="Ícone de Interface Amigável e Integrada">
+                    <h3 class="product-title">Interface Amigável e Integrada</h3>
+                    <p>
+                        Design intuitivo. Funcionalidades integradas em um único ambiente.
+                    </p>
+                </section>
+
+                <section class="product-item">
+                    <img th:src="@{/img/iconiTelefone.png}" alt="Ícone de Chat de Suporte e Feedback">
+                    <h3 class="product-title">Chat De Suporte e Feedback</h3>
+                    <p>
+                        Respostas automáticas via bots e suporte em tempo real. Canal direto para compartilhar experiências e sugerir melhorias.
+                    </p>
+                </section>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Deméter</p>
+    </footer>
+
+    <script th:src="@{/js/nossosProdutos.js}"></script>
+</body>
+</html>

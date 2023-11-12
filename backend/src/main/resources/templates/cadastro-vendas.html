@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Vendas</title>
+    <link rel="stylesheet" th:href="@{/css/cadastro-vendas.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<body>
+<header>
+    <button id="voltar" class="btn-voltar">
+        <i class="fas fa-arrow-left"></i> Voltar
+    </button>
+    <h1>Cadastrar Vendas</h1>
+</header>
+
+<section id="cadastrarVenda" class="cadastrarVenda">
+    <h2>Cadastrar Novas Vendas</h2>
+    <form id="form-cadastro">
+        <div class="produto">
+            <label for="nome-produto">Nome do Produto:</label>
+            <input type="text" class="nome-produto" th:required="required" />
+
+            <label for="quantidade">Quantidade:</label>
+            <input type="number" class="quantidade" th:required="required" />
+
+            <label for="valor-unitario">Valor Unitário (R$):</label>
+            <input type="number" class="valor-unitario" th:required="required" step="0.01" />
+        </div>
+
+        <label for="nome-cliente">Nome do Cliente:</label>
+        <input type="text" id="nome-cliente" th:required="required" />
+
+        <!-- Campo de CNPJ -->
+        <label for="cnpj">CNPJ:</label>
+        <input type="text" id="cnpj" th:required="required" />
+
+        <label for="saleDate">Data De Venda:</label>
+        <input type="date" id="saleDate" th:required="required" />
+
+        <button type="button" id="btn-adicionar-produtos">Adicionar Produto</button>
+        <button type="submit">Cadastrar</button>
+    </form>
+</section>
+
+<section id="valorTotal" class="valorTotal">
+    <h2>Valor Total da Venda</h2>
+    <div class="valor-total">
+        <label for="total">Total:</label>
+        <span id="total">R$ 0.00</span>
+        <!-- Botão de Emitir Nota Fiscal -->
+        <button id="btn-emitir-nota" class="btn-nota">Emitir Nota Fiscal</button>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2023 Deméter</p>
+</footer>
+
+<script th:src="@{/js/cadastro-vendas.js}"></script>
+</body>
+
+</html>

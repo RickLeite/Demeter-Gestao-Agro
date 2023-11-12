@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Clientes</title>
+    <link rel="stylesheet" th:href="@{/css/cadastro-cliente.css}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <button id="voltar" class="btn-voltar">
+            <i class="fas fa-arrow-left"></i> Voltar
+        </button>
+        <h1>Cadastro de Clientes</h1>
+    </header>
+    <div class="main-content">
+        <section class="container">
+            <h2>Cadastre um Cliente</h2>
+            <form id="form-cliente">
+                <label for="nome-cliente">Nome do Cliente:</label>
+                <input type="text" id="nome-cliente" required>
+
+                <label for="data-nascimento">Data de Nascimento:</label>
+                <input type="date" id="data-nascimento" required>
+
+                <label for="cpf-cliente">CPF do Cliente:</label>
+                <input type="text" id="cpf-cliente" required>
+
+                <label for="nome-empresa">Nome da Empresa:</label>
+                <input type="text" id="nome-empresa" required>
+
+                <label for="cnpj-empresa">CNPJ da Empresa:</label>
+                <input type="text" id="cnpj-empresa" required>
+
+                <button type="submit" id="botao-cadastrar-cliente">Cadastrar Cliente</button>
+            </form>
+            <p id="mensagem-cadastro"></p> 
+        </section>
+    </div>
+    <footer class="footer">
+        © 2023 Deméter
+    </footer>
+    <script th:src="js/cadastro-cliente"></script>
+</body>
+</html>

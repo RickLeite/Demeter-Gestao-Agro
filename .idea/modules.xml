@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Demeter-Gestao-Agro.iml" filepath="$PROJECT_DIR$/.idea/Demeter-Gestao-Agro.iml" />
-      <module fileurl="file://$PROJECT_DIR$/backend/gestaoagro.iml" filepath="$PROJECT_DIR$/backend/gestaoagro.iml" />
     </modules>
   </component>
 </project>
