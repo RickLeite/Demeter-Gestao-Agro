@@ -2,7 +2,6 @@ package com.demeter.gestaoagro.service;
 
 import com.demeter.gestaoagro.model.Registro;
 import com.demeter.gestaoagro.repository.RegistroRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +12,6 @@ public class RegistroService {
 
     private final RegistroRepository registroRepository;
 
-    @Autowired
     public RegistroService(RegistroRepository registroRepository) {
         this.registroRepository = registroRepository;
     }
@@ -42,6 +40,10 @@ public class RegistroService {
     }
 
     public void deletarRegistro(Long id) {
-        registroRepository.deleteById(id);
+        // Implemente a lógica para deletar o registro ou lance uma exceção se não existir
+        Registro registroExistente = registroRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Registro não encontrado"));
+
+        registroRepository.delete(registroExistente);
     }
 }

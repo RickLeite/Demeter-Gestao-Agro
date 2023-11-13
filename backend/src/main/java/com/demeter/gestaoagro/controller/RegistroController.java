@@ -2,7 +2,6 @@ package com.demeter.gestaoagro.controller;
 
 import com.demeter.gestaoagro.model.Registro;
 import com.demeter.gestaoagro.service.RegistroService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +15,6 @@ public class RegistroController {
 
     private final RegistroService registroService;
 
-    @Autowired
     public RegistroController(RegistroService registroService) {
         this.registroService = registroService;
     }
