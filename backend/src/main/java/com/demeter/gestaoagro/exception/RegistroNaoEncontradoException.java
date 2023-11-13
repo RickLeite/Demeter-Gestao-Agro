@@ -7,4 +7,4 @@ public class RegistroNaoEncontradoException extends RuntimeException {
     }
 }
 
-//pra lançar as exception
+//pra lançar as exceptionN

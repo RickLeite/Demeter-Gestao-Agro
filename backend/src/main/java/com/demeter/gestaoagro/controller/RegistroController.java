@@ -58,7 +58,7 @@ public class RegistroController {
             registroService.deletarRegistro(id);
             return new ResponseEntity<>("Registro deletado com sucesso!!", HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Erro ao deletar o registro!: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Erro ao deletar o registro: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

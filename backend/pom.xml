@@ -11,7 +11,7 @@
     <groupId>com.demeter</groupId>
     <artifactId>gestaoagro</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>gestaoAgro</name>
+    <name>gestaoagro</name>
     <description>App de Gestao Agro</description>
     <properties>
         <java.version>17</java.version>

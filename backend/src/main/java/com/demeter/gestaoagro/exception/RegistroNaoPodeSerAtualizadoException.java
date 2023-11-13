@@ -7,4 +7,4 @@ public class RegistroNaoPodeSerAtualizadoException extends java.lang.RuntimeExce
     }
 }
 
-//exception tbm
+//exception tbmd
