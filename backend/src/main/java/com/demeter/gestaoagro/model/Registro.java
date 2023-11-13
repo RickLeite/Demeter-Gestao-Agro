@@ -13,7 +13,7 @@ public class Registro {
     private String email;
     private String senha;
 
-    // Construtores
+    // Construtore
 
     public Registro() {
     }

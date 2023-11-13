@@ -48,7 +48,7 @@ public class RegistroService {
     public void deletarRegistro(String id) {
         try {
             Registro registroExistente = registroRepository.findById(id)
-                    .orElseThrow(() -> new RegistroNaoEncontradoException("O Registro não encontrado"));
+                    .orElseThrow(() -> new RegistroNaoEncontradoException("Registro não encontrado"));
 
             registroRepository.delete(registroExistente);
         } catch (RegistroNaoEncontradoException e) {
