@@ -2,8 +2,6 @@ package com.demeter.gestaoagro.service;
 
 import com.demeter.gestaoagro.model.Estoque;
 import com.demeter.gestaoagro.repository.EstoqueRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +11,6 @@ public class EstoqueService {
 
     private final EstoqueRepository estoqueRepository;
 
-    @Autowired
     public EstoqueService(EstoqueRepository estoqueRepository) {
         this.estoqueRepository = estoqueRepository;
     }

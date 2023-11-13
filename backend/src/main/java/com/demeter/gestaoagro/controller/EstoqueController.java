@@ -2,7 +2,6 @@ package com.demeter.gestaoagro.controller;
 import com.demeter.gestaoagro.service.EstoqueService;
 import com.demeter.gestaoagro.model.Estoque;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +12,6 @@ public class EstoqueController {
 
     private final EstoqueService estoqueService;
 
-    @Autowired
     public EstoqueController(EstoqueService estoqueService) {
         this.estoqueService = estoqueService;
     }

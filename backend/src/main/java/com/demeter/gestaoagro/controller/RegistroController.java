@@ -36,14 +36,14 @@ public class RegistroController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Registro> obterRegistroPorId(@PathVariable Long id) {
+    public ResponseEntity<Registro> obterRegistroPorId(@PathVariable String id) {
         Optional<Registro> registro = registroService.obterRegistroPorId(id);
         return registro.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> atualizarRegistro(@PathVariable Long id, @RequestBody Registro novoRegistro) {
+    public ResponseEntity<String> atualizarRegistro(@PathVariable String id, @RequestBody Registro novoRegistro) {
         try {
             Registro registroAtualizado = registroService.atualizarRegistro(id, novoRegistro);
             return new ResponseEntity<>("Registro atualizado com sucesso! ID: " + registroAtualizado.getId(), HttpStatus.OK);
@@ -53,7 +53,7 @@ public class RegistroController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletarRegistro(@PathVariable Long id) {
+    public ResponseEntity<String> deletarRegistro(@PathVariable String id) {
         try {
             registroService.deletarRegistro(id);
             return new ResponseEntity<>("Registro deletado com sucesso!", HttpStatus.OK);

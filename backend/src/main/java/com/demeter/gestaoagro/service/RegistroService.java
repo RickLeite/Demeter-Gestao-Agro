@@ -1,5 +1,7 @@
 package com.demeter.gestaoagro.service;
 
+import com.demeter.gestaoagro.exception.RegistroNaoEncontradoException;
+import com.demeter.gestaoagro.exception.RegistroNaoPodeSerAtualizadoException;
 import com.demeter.gestaoagro.model.Registro;
 import com.demeter.gestaoagro.repository.RegistroRepository;
 import org.springframework.stereotype.Service;
@@ -24,26 +26,33 @@ public class RegistroService {
         return registroRepository.findAll();
     }
 
-    public Optional<Registro> obterRegistroPorId(Long id) {
+    public Optional<Registro> obterRegistroPorId(String id) {
         return registroRepository.findById(id);
     }
 
-    public Registro atualizarRegistro(Long id, Registro novoRegistro) {
-        Registro registroExistente = registroRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Registro não encontrado"));
+    public Registro atualizarRegistro(String id, Registro novoRegistro) {
+        try {
+            Registro registroExistente = registroRepository.findById(id)
+                    .orElseThrow(() -> new RegistroNaoEncontradoException("Registro não encontrado"));
 
-        registroExistente.setNome(novoRegistro.getNome());
-        registroExistente.setEmail(novoRegistro.getEmail());
-        registroExistente.setSenha(novoRegistro.getSenha());
+            registroExistente.setNome(novoRegistro.getNome());
+            registroExistente.setEmail(novoRegistro.getEmail());
+            registroExistente.setSenha(novoRegistro.getSenha());
 
-        return registroRepository.save(registroExistente);
+            return registroRepository.save(registroExistente);
+        } catch (RegistroNaoEncontradoException e) {
+            throw new RegistroNaoPodeSerAtualizadoException("Não foi possível atualizar o registro: " + e.getMessage());
+        }
     }
 
-    public void deletarRegistro(Long id) {
-        // Implemente a lógica para deletar o registro ou lance uma exceção se não existir
-        Registro registroExistente = registroRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Registro não encontrado"));
+    public void deletarRegistro(String id) {
+        try {
+            Registro registroExistente = registroRepository.findById(id)
+                    .orElseThrow(() -> new RegistroNaoEncontradoException("Registro não encontrado"));
 
-        registroRepository.delete(registroExistente);
+            registroRepository.delete(registroExistente);
+        } catch (RegistroNaoEncontradoException e) {
+            throw new RegistroNaoPodeSerAtualizadoException("Erro ao deletar o registro: " + e.getMessage());
+        }
     }
 }

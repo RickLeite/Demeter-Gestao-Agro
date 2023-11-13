@@ -1,16 +1,13 @@
 package com.demeter.gestaoagro.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+@Document(collection = "registros")
 public class Registro {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     private String nome;
     private String email;
@@ -29,11 +26,11 @@ public class Registro {
 
     // Getters e Setters
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -61,5 +58,5 @@ public class Registro {
         this.senha = senha;
     }
 
-    // Outros métodos p colocar aqui
+    // Outros métodos
 }
