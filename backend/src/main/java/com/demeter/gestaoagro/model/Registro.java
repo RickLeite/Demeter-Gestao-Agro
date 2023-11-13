@@ -58,5 +58,5 @@ public class Registro {
         this.senha = senha;
     }
 
-    // Outros métodos
+    // Outros métodos p colocar
 }
