@@ -6,3 +6,5 @@ public class RegistroNaoPodeSerAtualizadoException extends java.lang.RuntimeExce
         super(message);
     }
 }
+
+//exception tbm

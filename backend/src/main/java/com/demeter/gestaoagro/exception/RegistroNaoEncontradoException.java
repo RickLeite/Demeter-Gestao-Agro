@@ -6,3 +6,5 @@ public class RegistroNaoEncontradoException extends RuntimeException {
         super(message);
     }
 }
+
+//pra lançar as exception

@@ -48,11 +48,11 @@ public class RegistroService {
     public void deletarRegistro(String id) {
         try {
             Registro registroExistente = registroRepository.findById(id)
-                    .orElseThrow(() -> new RegistroNaoEncontradoException("Registro não encontrado"));
+                    .orElseThrow(() -> new RegistroNaoEncontradoException("O Registro não encontrado"));
 
             registroRepository.delete(registroExistente);
         } catch (RegistroNaoEncontradoException e) {
-            throw new RegistroNaoPodeSerAtualizadoException("Erro ao deletar o registro: " + e.getMessage());
+            throw new RegistroNaoPodeSerAtualizadoException("Erro ao deletar o registro informado: " + e.getMessage());
         }
     }
 }
