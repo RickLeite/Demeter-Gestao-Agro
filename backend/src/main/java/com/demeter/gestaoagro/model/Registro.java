@@ -14,6 +14,7 @@ public class Registro {
     private String senha;
 
     // Construtores
+    //...
 
     public Registro() {
     }
