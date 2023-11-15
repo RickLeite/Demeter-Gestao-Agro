@@ -48,6 +48,7 @@ public class GestaoagroApplication {
             map.forEach((info, method) -> {
                 if (method.getMethod().isAnnotationPresent(GetMapping.class)) {
                     GetMapping getMapping = method.getMethodAnnotation(GetMapping.class);
+                    assert getMapping != null;
                     System.out.println("http://127.0.0.1:" + serverPort + getMapping.value()[0]);
                 }
             });
