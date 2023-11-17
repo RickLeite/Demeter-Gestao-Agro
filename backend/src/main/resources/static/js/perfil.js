@@ -25,44 +25,45 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("emailUsuario").textContent = "E-mail: " + emailUsuario;
 
     document.getElementById('btnEstoque').addEventListener('click', function() {
-        window.location.href = 'estoque.html';
+        window.location.href = '/estoque';
     });
 
     document.getElementById('btnFinanceiro').addEventListener('click', function() {
-        window.location.href = 'financeiro.html';
+        window.location.href = '/financeiro';
     });
 
     document.getElementById('btnCadastrarClientes').addEventListener('click', function() {
-        window.location.href = 'cadastro-cliente.html';
+        window.location.href = '/cadastro-cliente';
     });
 
     document.getElementById('btnListaProdutos').addEventListener('click', function() {
-        window.location.href = 'listaProdutos.html';
+        window.location.href = '/lista-produtos';
     });
 
     document.getElementById('btnCadastrarVendas').addEventListener('click', function() {
-        window.location.href = 'cadastro-vendas.html';
+        window.location.href = '/cadastro-vendas';
     });
 
     document.getElementById('btnListaClientes').addEventListener('click', function() {
-        window.location.href = 'listaClientes.html';
+        window.location.href = '/lista-clientes';
     });
 
     document.getElementById('btnHistoricoVendas').addEventListener('click', function() {
-        window.location.href = 'historicoDeVendas.html';
+        window.location.href = '/historico-vendas';
     });
 
     document.getElementById('btnLucrosGastos').addEventListener('click', function() {
-        window.location.href = 'lucrosGastos.html';
+        window.location.href = '/lucros-gastos';
     });
 
     document.querySelector('.exit-button').addEventListener('click', function() {
-        window.location.href = 'index.html';
+        window.location.href = '/index';
     });
 
     document.querySelector('.feedback-button').addEventListener('click', function() {
-        window.location.href = 'cadastroFeedback.html';
+        window.location.href = '/cadastro-feedback';
     });
-    
-    
+
+
+
 });
