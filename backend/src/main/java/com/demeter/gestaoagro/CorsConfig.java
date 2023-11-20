@@ -13,14 +13,14 @@ public class CorsConfig implements WebMvcConfigurer {
     @Value("${server.port}")
     private String serverport;
 
-//    @Override
-//    public void addCorsMappings(CorsRegistry registry) {
-//        registry.addMapping("/**")
-//                .allowedOrigins("http://localhost:"+ serverport, "https://yourdomain.com")
-//                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-//                .allowedHeaders("Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin")
-//                .exposedHeaders("Authorization")
-//                .allowCredentials(true)
-//                .maxAge(3600);
-//    }
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:" + serverport, "http://127.0.0.1:" + serverport)
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin")
+                .exposedHeaders("Authorization")
+                .allowCredentials(true)
+                .maxAge(3600);
+    }
 }

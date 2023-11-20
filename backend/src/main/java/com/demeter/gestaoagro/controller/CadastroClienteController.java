@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cadastroCliente")
-@CrossOrigin(origins = "http://127.0.0.1:3000")
 public class CadastroClienteController {
 
     private final CadastroClienteService cadastroClienteService;
