@@ -16,6 +16,11 @@ public class EstoqueController {
         this.estoqueService = estoqueService;
     }
 
+    @GetMapping("/all")
+    public List<Estoque> getAllEstoque() {
+        return estoqueService.getAllEstoque();
+    }
+
     @PostMapping("/add")
     public Estoque addEstoque(@RequestBody Estoque estoque) {
         return estoqueService.saveEstoque(estoque);

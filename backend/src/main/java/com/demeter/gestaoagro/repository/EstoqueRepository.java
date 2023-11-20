@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface EstoqueRepository extends MongoRepository<Estoque, String> {
+    List<Estoque> findAll();
 
     List<Estoque> findByNomeProduto(@Param("nomeProduto") String nomeProduto);
 
