@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Telnet</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Monaco, monospace;
+            background-color: black;
+            color: #00FF00;
+        }
+
+        #terminal {
+            padding: 10px;
+            white-space: pre-wrap;
+            overflow-y: scroll;
+            height: 100vh;
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+<div id="terminal"></div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const terminal = document.getElementById('terminal');
+        const socket = new WebSocket('ws://localhost:12345');
+
+        socket.onopen = () => {
+            writeToTerminal('Connected to Telnet server.\n');
+        };
+
+        socket.onmessage = (event) => {
+            writeToTerminal(event.data);
+        };
+
+        socket.onclose = () => {
+            writeToTerminal('Connection closed.\n');
+        };
+
+        function writeToTerminal(message) {
+            terminal.textContent += message;
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        // Example: Send a command to the server
+        function sendCommand() {
+            const command = 'ls\r\n'; // Example command
+            socket.send(command);
+        }
+    });
+</script>
+<script>
+    // WebSocket-to-Telnet Server (Node.js Example)
+    const WebSocket = require('websocket').server;
+    const http = require('http');
+    const Telnet = require('telnet');
+
+    const server = http.createServer((request, response) => {
+        response.writeHead(404);
+        response.end();
+    });
+
+    server.listen(8080, () => {
+        console.log('WebSocket server is listening on port 8080');
+    });
+
+    const wsServer = new WebSocket({
+        httpServer: server,
+    });
+
+    wsServer.on('request', (request) => {
+        const connection = request.accept(null, request.origin);
+
+        // Create a Telnet connection
+        const telnetClient = new Telnet();
+        telnetClient.on('data', (data) => {
+            connection.sendUTF(data.toString());
+        });
+
+        connection.on('message', (message) => {
+            if (message.type === 'utf8') {
+                // Send the received WebSocket message to the Telnet server
+                telnetClient.write(message.utf8Data);
+            }
+        });
+
+        connection.on('close', (reasonCode, description) => {
+            console.log(`WebSocket client disconnected: ${description}`);
+            telnetClient.end();
+        });
+    });
+</script>
+</body>
+</html>

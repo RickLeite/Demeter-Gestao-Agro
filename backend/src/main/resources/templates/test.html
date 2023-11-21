@@ -1,19 +1,39 @@
-<!-- src/main/resources/templates/index.html -->
-
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spring Boot CSS Example</title>
-    <link rel="stylesheet" th:href="@{'/css/test.css'}">
+    <title>WebSocket Test</title>
 </head>
 <body>
-<div class="header">
-    <h1>Hello Spring Boot!</h1>
+<div>
+    <label for="message">Message:</label>
+    <input type="text" id="message" placeholder="Type a message...">
+    <button onclick="sendMessage()">Send</button>
 </div>
-<div class="content">
-    <p>This is a sample page with CSS styling.</p>
+
+<div id="output">
+    <!-- Received messages will be displayed here -->
 </div>
+
+<script>
+    const socket = new WebSocket("ws://localhost:12345"); // Replace with your server address and port
+
+    socket.addEventListener("open", (event) => {
+        console.log("Connected to the server");
+    });
+
+    socket.addEventListener("message", (event) => {
+        const outputDiv = document.getElementById('output');
+        outputDiv.innerHTML += `<p>${event.data}</p>`;
+    });
+
+    function sendMessage() {
+        const messageInput = document.getElementById("message");
+        const message = messageInput.value;
+        socket.send(message);
+        messageInput.value = "";
+    }
+</script>
 </body>
 </html>

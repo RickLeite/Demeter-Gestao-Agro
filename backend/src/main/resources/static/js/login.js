@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (username === 'admin' && password === '123') {
             alert('Login bem-sucedido!');
-            window.location.href = 'perfil.html';
+            window.location.href = 'login';
 
         } else {
             alert('Usuário ou senha inválidos.');
