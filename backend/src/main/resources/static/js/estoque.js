@@ -1,14 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const formCadastro = document.getElementById("form-cadastro");
     const listaProdutos = document.getElementById("lista-produtos");
-    const botaoCadastrar = document.getElementById("cadastrar-button");
-    const botaoGerarPlanilha = document.getElementById("botao-gerar-planilha");
-    const dashboardQuantidadeProdutos = document.getElementById("quantidade-produtos");
-    const dashboardValorTotal = document.getElementById("valor-total");
-
-    let produtoEditando = null;
-    let idProduto = 1;
-    const produtos = [];
 
     formCadastro.addEventListener("submit", function (e) {
         e.preventDefault();
@@ -22,119 +14,39 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        if (produtoEditando) {
-            const index = produtos.findIndex((produto) => produto.id === produtoEditando.id);
-            produtos[index].nome = nome;
-            produtos[index].quantidade = quantidade;
-            produtos[index].valorUnitario = valorUnitario;
+        const produto = {
+            nomeProduto: nome,
+            quantidade: quantidade,
+            preco: valorUnitario
+        };
 
-            const row = document.getElementById(produtoEditando.id);
-            row.children[1].textContent = nome;
-            row.children[2].textContent = quantidade;
-            row.children[3].textContent = valorUnitario;
-
-            produtoEditando = null;
-            botaoCadastrar.textContent = "Cadastrar";
-        } else {
-            const novoProduto = {
-                id: idProduto,
-                nome: nome,
-                quantidade: quantidade,
-                valorUnitario: valorUnitario
-            };
-            adicionarProduto(novoProduto);
-            produtos.push(novoProduto);
-            idProduto++;
-        }
-
-        formCadastro.reset();
-        gerarPlanilha();
-        atualizarDashboard();
+        adicionarProdutoAPI(produto);
     });
 
-    function adicionarProduto(produto) {
+    function adicionarProdutoAPI(produto) {
+        fetch('http://127.0.0.1:3000/estoque/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(produto)
+        })
+        .then(response => response.json())
+        .then(data => {
+            adicionarProdutoNaTabela(data);
+        })
+        .catch(error => console.error('Erro ao adicionar produto:', error));
+    }
+
+    function adicionarProdutoNaTabela(produto) {
         const row = document.createElement("tr");
-        row.setAttribute("id", produto.id);
         row.innerHTML = `
             <td>${produto.id}</td>
-            <td>${produto.nome}</td>
+            <td>${produto.nomeProduto}</td>
             <td>${produto.quantidade}</td>
-            <td>${produto.valorUnitario}</td>
-            <td>
-                <button class="editar-button" data-id="${produto.id}">Editar</button>
-                <button class="excluir-button" data-id="${produto.id}">Excluir</button>
-            </td>
+            <td>${produto.preco}</td>
+            <td>Ações</td>
         `;
         listaProdutos.appendChild(row);
     }
-
-    listaProdutos.addEventListener("click", (e) => {
-        if (e.target.classList.contains("editar-button")) {
-            const id = e.target.getAttribute("data-id");
-            const produto = produtos.find((p) => p.id === parseInt(id));
-
-            document.getElementById("nome-produto").value = produto.nome;
-            document.getElementById("quantidade").value = produto.quantidade;
-            document.getElementById("valor-unitario").value = produto.valorUnitario;
-            produtoEditando = produto;
-            botaoCadastrar.textContent = "Salvar";
-        } else if (e.target.classList.contains("excluir-button")) {
-            const id = e.target.getAttribute("data-id");
-            const index = produtos.findIndex((produto) => produto.id === parseInt(id));
-            const produto = produtos[index];
-
-            // Exibir uma mensagem de confirmação
-            const confirmarExclusao = confirm(`Tem certeza que deseja excluir o produto "${produto.nome}"?`);
-
-            if (confirmarExclusao) {
-                produtos.splice(index, 1);
-
-                const row = document.getElementById(id);
-                row.remove();
-
-                gerarPlanilha();
-                atualizarDashboard();
-            }
-        }
-    });
-
-    function gerarPlanilha() {
-        const table = document.getElementById("lista-produtos");
-        const rows = table.querySelectorAll("tr");
-        const csvContent = [];
-
-        // Adiciona cabeçalhos à planilha
-        csvContent.push("ID,Produto,Quantidade,Valor Unitário");
-
-        for (const row of rows) {
-            const cells = row.querySelectorAll("td");
-            const rowData = [];
-
-            // Obtém os dados da linha e os adiciona à matriz de dados
-            for (const cell of cells) {
-                rowData.push(cell.textContent);
-            }
-
-            // Converte a matriz de dados em uma string CSV
-            const rowString = rowData.join(",");
-            csvContent.push(rowString);
-        }
-
-        const csvString = csvContent.join("\n");
-        const blob = new Blob([csvString], { type: "text/csv" });
-        const url = window.URL.createObjectURL(blob);
-
-        botaoGerarPlanilha.href = url;
-        botaoGerarPlanilha.download = "estoque.csv";
-    }
-
-    function atualizarDashboard() {
-        dashboardQuantidadeProdutos.textContent = produtos.length;
-
-        const valorTotal = produtos.reduce((total, produto) => total + produto.quantidade * produto.valorUnitario, 0);
-        dashboardValorTotal.textContent = valorTotal.toFixed(2);
-    }
-});
-document.getElementById('voltar').addEventListener('click', function() {
-    window.history.back();
 });
