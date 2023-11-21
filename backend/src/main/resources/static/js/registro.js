@@ -15,7 +15,7 @@ registroForm.addEventListener('submit', function (e) {
     } else {
 
         alert('Cadastro bem-sucedido!');
-        registroForm.reset();
+        window.location.href="login"
     }
 });
 
