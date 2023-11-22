@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/cadastroCliente")
 public class CadastroClienteController {
@@ -27,5 +26,12 @@ public class CadastroClienteController {
         return cadastroClienteService.saveCadastroClientes(cadastroClientes);
     }
 
-    // Outros endpoints podem ser adicionados aqui conforme necessário
+
+    @GetMapping("/all")
+    public List<CadastroCliente> getAllCadastroClientes() {
+        return cadastroClienteService.findAll();
+    }
+
+    
 }
+

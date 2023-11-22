@@ -34,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function enviarCadastroParaServidor(cadastroCliente) {
-        // Substitua 'localhost:3000' pela URL correta do seu servidor
         return fetch('http://localhost:3000/cadastroCliente/add', {
             method: 'POST',
             headers: {
