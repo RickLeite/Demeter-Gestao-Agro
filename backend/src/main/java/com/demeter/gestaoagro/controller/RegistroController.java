@@ -2,14 +2,15 @@ package com.demeter.gestaoagro.controller;
 
 import com.demeter.gestaoagro.model.Registro;
 import com.demeter.gestaoagro.service.RegistroService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@Controller
 @RequestMapping("/registro")
 public class RegistroController {
 
@@ -19,46 +20,110 @@ public class RegistroController {
         this.registroService = registroService;
     }
 
+    @GetMapping("/cadastrar")
+    public String mostrarFormularioCadastro() {
+        return "registro";
+    }
+
     @PostMapping("/cadastrar")
-    public ResponseEntity<String> cadastrarRegistro(@RequestBody Registro registro) {
+    public ModelAndView cadastrarRegistro(@ModelAttribute Registro registro, Model model) {
+        ModelAndView modelAndView = new ModelAndView();
+
         try {
-            Registro novoRegistro = registroService.salvarRegistro(registro);
-            return new ResponseEntity<>("Registro cadastrado com sucesso! ID: " + novoRegistro.getId(), HttpStatus.CREATED);
+            registroService.salvarRegistro(registro);
+            modelAndView.setViewName("redirect:/login");
+            return modelAndView;
         } catch (Exception e) {
-            return new ResponseEntity<>("Erro ao cadastrar o registro: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            model.addAttribute("erro", "Erro ao cadastrar o registro: " + e.getMessage());
+            modelAndView.setViewName("erro");
+            return modelAndView;
+        }
+    }
+
+    @PostMapping("/autenticar")
+    public ModelAndView autenticarRegistro(@RequestParam String email, @RequestParam String senha, Model model) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        try {
+            Registro registroAutenticado = registroService.autenticarRegistro(email, senha);
+
+            if (registroAutenticado != null) {
+                modelAndView.addObject("registro", registroAutenticado);
+                modelAndView.setViewName("redirect:/perfil");
+                return modelAndView;
+            } else {
+                model.addAttribute("erro", "Usuário ou senha inválidos");
+                modelAndView.setViewName("erro");
+                return modelAndView;
+            }
+        } catch (Exception e) {
+            model.addAttribute("erro", "Erro ao autenticar o registro: " + e.getMessage());
+            modelAndView.setViewName("erro");
+            return modelAndView;
         }
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<Registro>> listarRegistros() {
+    public String listarRegistros(Model model) {
         List<Registro> registros = registroService.listarRegistros();
-        return new ResponseEntity<>(registros, HttpStatus.OK);
+        model.addAttribute("registros", registros);
+        return "listaRegistros";
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Registro> obterRegistroPorId(@PathVariable String id) {
+    public String obterRegistroPorId(@PathVariable String id, Model model) {
         Optional<Registro> registro = registroService.obterRegistroPorId(id);
-        return registro.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<String> atualizarRegistro(@PathVariable String id, @RequestBody Registro novoRegistro) {
-        try {
-            Registro registroAtualizado = registroService.atualizarRegistro(id, novoRegistro);
-            return new ResponseEntity<>("Registro atualizado com sucesso! ID: " + registroAtualizado.getId(), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Erro ao atualizar o registro: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        if (registro.isPresent()) {
+            model.addAttribute("registro", registro.get());
+            return "detalhesRegistro";
+        } else {
+            return "registroNaoEncontrado";
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletarRegistro(@PathVariable String id) {
+    @GetMapping("/editar/{id}")
+    public String mostrarFormularioEdicao(@PathVariable String id, Model model) {
+        Optional<Registro> registro = registroService.obterRegistroPorId(id);
+        if (registro.isPresent()) {
+            model.addAttribute("registro", registro.get());
+            return "editarRegistro";
+        } else {
+            return "registroNaoEncontrado";
+        }
+    }
+
+    @PostMapping("/editar/{id}")
+    public String atualizarRegistro(@PathVariable String id, @ModelAttribute Registro novoRegistro, Model model) {
+        try {
+            Registro registroAtualizado = registroService.atualizarRegistro(id, novoRegistro);
+            model.addAttribute("mensagem", "Registro atualizado com sucesso! ID: " + registroAtualizado.getId());
+            return "sucesso";
+        } catch (Exception e) {
+            model.addAttribute("erro", "Erro ao atualizar o registro: " + e.getMessage());
+            return "erro";
+        }
+    }
+
+    @GetMapping("/deletar/{id}")
+    public String mostrarFormularioDelecao(@PathVariable String id, Model model) {
+        Optional<Registro> registro = registroService.obterRegistroPorId(id);
+        if (registro.isPresent()) {
+            model.addAttribute("registro", registro.get());
+            return "deletarRegistro";
+        } else {
+            return "registroNaoEncontrado";
+        }
+    }
+
+    @PostMapping("/deletar/{id}")
+    public String deletarRegistro(@PathVariable String id, Model model) {
         try {
             registroService.deletarRegistro(id);
-            return new ResponseEntity<>("Registro deletado com sucesso!!", HttpStatus.OK);
+            model.addAttribute("mensagem", "Registro deletado com sucesso!");
+            return "sucesso";
         } catch (Exception e) {
-            return new ResponseEntity<>("Erro ao deletar o registro: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            model.addAttribute("erro", "Erro ao deletar o registro: " + e.getMessage());
+            return "erro";
         }
     }
 }
