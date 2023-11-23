@@ -2,7 +2,6 @@ package com.demeter.gestaoagro.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class IndexController {
@@ -57,11 +56,6 @@ public class IndexController {
         return "listaProdutos";
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
-
     @GetMapping("/lucros-gastos")
     public String lucrosGastos() {
         return "lucrosGastos";
@@ -81,8 +75,9 @@ public class IndexController {
     public String registro() {
         return "registro";
     }
-    @PostMapping("/registro1")
-    public int registroPost() {
-        return 1213;
+
+    @GetMapping("/pagina-de-login")
+    public String login() {
+        return "login";
     }
 }
