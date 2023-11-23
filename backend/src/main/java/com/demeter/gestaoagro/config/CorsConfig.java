@@ -1,4 +1,4 @@
-package com.demeter.gestaoagro;
+package com.demeter.gestaoagro.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -23,4 +23,21 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowCredentials(true)
                 .maxAge(3600);
     }
+
+
+    // for tests
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//        registry.addMapping("/**")
+//                .allowedOrigins("*")
+//                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+//                .allowedHeaders("Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin")
+//                .exposedHeaders("Authorization")
+//                .allowCredentials(true)
+//                .maxAge(3600);
+//    }
+
+
+
+
 }

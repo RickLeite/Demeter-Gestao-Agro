@@ -3,96 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Telnet</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Monaco, monospace;
-            background-color: black;
-            color: #00FF00;
-        }
-
-        #terminal {
-            padding: 10px;
-            white-space: pre-wrap;
-            overflow-y: scroll;
-            height: 100vh;
-            background-color: black;
-        }
-    </style>
+    <title>WebSocket Client</title>
 </head>
 <body>
-<div id="terminal"></div>
+<h1>WebSocket Client</h1>
+<div id="messages"></div>
+<input type="text" id="messageInput" placeholder="Type a message">
+<button onclick="sendMessage()">Send Message</button>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.2/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const terminal = document.getElementById('terminal');
-        const socket = new WebSocket('ws://localhost:12345');
+    // WebSocket server running on localhost with port 3000
+    const socket = new SockJS('http://localhost:3000/websocket');
+    const stompClient = Stomp.over(socket);
 
-        socket.onopen = () => {
-            writeToTerminal('Connected to Telnet server.\n');
-        };
+    stompClient.connect({}, () => {
+        console.log('WebSocket Client Connected');
+    });
 
-        socket.onmessage = (event) => {
-            writeToTerminal(event.data);
-        };
+    function sendMessage() {
+        const messageInput = document.getElementById('messageInput');
+        const message = messageInput.value;
 
-        socket.onclose = () => {
-            writeToTerminal('Connection closed.\n');
-        };
-
-        function writeToTerminal(message) {
-            terminal.textContent += message;
-            terminal.scrollTop = terminal.scrollHeight;
+        if (message.trim() !== '') {
+            stompClient.send("/app/hello", {}, JSON.stringify({ content: message }));
         }
+    }
 
-        // Example: Send a command to the server
-        function sendCommand() {
-            const command = 'ls\r\n'; // Example command
-            socket.send(command);
-        }
-    });
-</script>
-<script>
-    // WebSocket-to-Telnet Server (Node.js Example)
-    const WebSocket = require('websocket').server;
-    const http = require('http');
-    const Telnet = require('telnet');
-
-    const server = http.createServer((request, response) => {
-        response.writeHead(404);
-        response.end();
+    stompClient.subscribe('/topic/greetings', (response) => {
+        const content = JSON.parse(response.body).content;
+        displayMessage(`Server says: ${content}`);
     });
 
-    server.listen(8080, () => {
-        console.log('WebSocket server is listening on port 8080');
-    });
-
-    const wsServer = new WebSocket({
-        httpServer: server,
-    });
-
-    wsServer.on('request', (request) => {
-        const connection = request.accept(null, request.origin);
-
-        // Create a Telnet connection
-        const telnetClient = new Telnet();
-        telnetClient.on('data', (data) => {
-            connection.sendUTF(data.toString());
-        });
-
-        connection.on('message', (message) => {
-            if (message.type === 'utf8') {
-                // Send the received WebSocket message to the Telnet server
-                telnetClient.write(message.utf8Data);
-            }
-        });
-
-        connection.on('close', (reasonCode, description) => {
-            console.log(`WebSocket client disconnected: ${description}`);
-            telnetClient.end();
-        });
-    });
+    function displayMessage(message) {
+        const messagesDiv = document.getElementById('messages');
+        const messageElement = document.createElement('p');
+        messageElement.textContent = message;
+        messagesDiv.appendChild(messageElement);
+    }
 </script>
 </body>
 </html>

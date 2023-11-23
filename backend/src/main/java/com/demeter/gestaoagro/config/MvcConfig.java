@@ -1,4 +1,4 @@
-package com.demeter.gestaoagro;
+package com.demeter.gestaoagro.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
