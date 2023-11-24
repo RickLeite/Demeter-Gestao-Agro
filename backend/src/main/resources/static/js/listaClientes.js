@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function buscarClientes() {
-        fetch('/clientes/lista') // Atualize para o novo endpoint
+        fetch('/clientes/lista') 
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Erro HTTP, status ${response.status}`);
@@ -38,9 +38,27 @@ document.addEventListener('DOMContentLoaded', function() {
             <td>${cliente.cpf || ''}</td>
             <td>${cliente.nomeEmpresa || ''}</td>
             <td>${cliente.cnpj || ''}</td>
-            <td><button class="btn-delete">Excluir</button></td>
+            <td><button class="btn-delete" data-id="${cliente.id}">Excluir</button></td>
         `;
-        // Adicione aqui a lógica para excluir um cliente
+
+        const btnDelete = linha.querySelector('.btn-delete');
+        btnDelete.addEventListener('click', function() {
+            if (confirm('Tem certeza que deseja excluir este cliente?')) {
+                fetch(`/clientes/${cliente.id}`, {
+                    method: 'DELETE'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Cliente excluído com sucesso');
+                        linha.remove();
+                    } else {
+                        console.error('Falha ao excluir cliente');
+                    }
+                })
+                .catch(error => console.error('Erro ao excluir cliente:', error));
+            }
+        });
+
         return linha;
     }
 

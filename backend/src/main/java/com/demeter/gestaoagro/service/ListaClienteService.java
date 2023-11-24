@@ -18,4 +18,8 @@ public class ListaClienteService {
     public List<CadastroCliente> listarTodos() {
         return cadastroClienteRepository.findAll();
     }
+
+    public void deleteCliente(String id) {
+        cadastroClienteRepository.deleteById(id);
+    }
 }
