@@ -10,5 +10,4 @@ public class Produto {
     private int quantidade;
     private double valorUnitario;
 
-    // Construtores, se necessário
 }

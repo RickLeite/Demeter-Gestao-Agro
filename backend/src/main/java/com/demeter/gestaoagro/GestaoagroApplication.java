@@ -57,31 +57,35 @@ public class GestaoagroApplication {
     }
 
     @Component
-    static
-    class MyComponent {
+    static class MyComponent {
         @Value("${server.port}")
         private int serverPort;
-
-        @Autowired
-        private Environment environment;
 
         @Autowired
         private RequestMappingHandlerMapping requestMappingHandlerMapping;
 
         @PostConstruct
         public void printServerPort() {
-            System.out.println("Server is running on port: " + serverPort);
+            try {
+                System.out.println("Server is running on port: " + serverPort);
 
-            Map<RequestMappingInfo, HandlerMethod> map = requestMappingHandlerMapping.getHandlerMethods();
-            System.out.println("List of @GetMapping endpoints:");
+                Map<RequestMappingInfo, HandlerMethod> map = requestMappingHandlerMapping.getHandlerMethods();
+                System.out.println("List of @GetMapping endpoints:");
 
-            map.forEach((info, method) -> {
-                if (method.getMethod().isAnnotationPresent(GetMapping.class)) {
-                    GetMapping getMapping = method.getMethodAnnotation(GetMapping.class);
-                    assert getMapping != null;
-                    System.out.println("http://127.0.0.1:" + serverPort + getMapping.value()[0]);
-                }
-            });
+                map.forEach((info, method) -> {
+                    if (method.getMethod().isAnnotationPresent(GetMapping.class)) {
+                        GetMapping getMapping = method.getMethodAnnotation(GetMapping.class);
+                        if (getMapping != null && getMapping.value().length > 0) {
+                            System.out.println("http://127.0.0.1:" + serverPort + getMapping.value()[0]);
+                        } else {
+                            System.err.println("Warning: @GetMapping annotation without a value");
+                        }
+                    }
+                });
+            } catch (Exception e) {
+                System.err.println("Error in printServerPort: " + e.getMessage());
+                e.printStackTrace();
+            }
         }
     }
 }

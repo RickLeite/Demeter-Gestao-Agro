@@ -1,37 +1,20 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const tabelaCorpo = document.querySelector('tbody');
-    const inputPesquisa = document.querySelector('input[type="text"]');
+    const inputPesquisa = document.querySelector('#inputPesquisa');
     const btnPesquisar = document.querySelector('#btnPesquisar');
-    const btnGerarCSV = document.querySelector('#gerarRelatorios button:nth-child(1)'); // Primeiro botão do container gerarRelatorios
-    const btnGerarPDF = document.querySelector('#gerarRelatorios button:nth-child(2)'); // Segundo botão do container gerarRelatorios
+    const btnGerarCSV = document.querySelector('#btnGerarCSV');
+    const btnGerarPDF = document.querySelector('#btnGerarPDF');
 
-      // Dados fictícios de vendas
-    const vendas = [
-        {
-            cnpj: '12.345.678/0001-99',
-            nomeEmpresa: 'Empresa A',
-            quantidadeTotal: 100,
-            valorTotal: 'R$ 1.000,00',
-            dataVenda: '01/11/2023'
-        },
-        {
-            cnpj: '98.765.432/0001-00',
-            nomeEmpresa: 'Empresa B',
-            quantidadeTotal: 50,
-            valorTotal: 'R$ 500,00',
-            dataVenda: '03/11/2023'
-        },
-        {
-            cnpj: '55.555.555/0001-11',
-            nomeEmpresa: 'Empresa C',
-            quantidadeTotal: 30,
-            valorTotal: 'R$ 300,00',
-            dataVenda: '03/11/2023'
-        }
-    ];
+    function obterTodasAsVendas() {
+        fetch('http://localhost:3000/vendas/todas')
+            .then(response => response.json())
+            .then(vendas => {
+                exibirVendasNaTabela(vendas);
+            })
+            .catch(error => console.error('Erro ao obter as vendas:', error));
+    }
 
-    // Função para exibir todas as vendas
-    function exibirTodasAsVendas() {
+    function exibirVendasNaTabela(vendas) {
         tabelaCorpo.innerHTML = '';
         vendas.forEach(venda => {
             const linha = criarLinhaVenda(venda);
@@ -39,126 +22,104 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Função para criar uma linha de venda com base nos dados fornecidos
     function criarLinhaVenda(venda) {
         const linha = document.createElement('tr');
         linha.innerHTML = `
             <td>${venda.cnpj}</td>
             <td>${venda.nomeEmpresa}</td>
-            <td>${venda.quantidadeTotal}</td>
-            <td>${venda.valorTotal}</td>
-            <td>${venda.dataVenda}</td>
+            <td>${venda.quantidade}</td>
+            <td>${Number(venda.valorTotal).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+            <td>${venda.saleDate}</td>
             <td>
-                <button class="btn-delete"><i class="fas fa-trash-alt"></i> Excluir</button>
+                <button class="btn-delete" data-id="${venda.id}">
+                    <i class="fas fa-trash-alt"></i> Excluir
+                </button>
             </td>
         `;
 
-        // Adicione um ouvinte de evento ao botão 'Excluir' da linha recém-criada
-        linha.querySelector('.btn-delete').addEventListener('click', function() {
-            // Remova a linha quando o botão de exclusão for clicado
-            linha.remove();
+        linha.querySelector('.btn-delete').addEventListener('click', function () {
+            const vendaId = venda.id;
+            excluirVenda(vendaId);
         });
 
         return linha;
     }
-    btnPesquisar.addEventListener('click', function() {
+
+    function pesquisarVendasPorCNPJ(cnpj) {
+        fetch(`http://localhost:3000/vendas/por-cnpj/${cnpj}`)
+            .then(response => response.json())
+            .then(vendas => {
+                exibirVendasNaTabela(vendas);
+            })
+            .catch(error => console.error('Erro ao obter as vendas por CNPJ:', error));
+    }
+
+    function excluirVenda(vendaId) {
+        fetch(`http://localhost:3000/vendas/excluir/${vendaId}`, {
+            method: 'DELETE',
+        })
+            .then(response => response.json())
+            .then(result => {
+                console.log('Venda excluída com sucesso:', result);
+                obterTodasAsVendas();
+            })
+            .catch(error => console.error('Erro ao excluir a venda:', error));
+    }
+
+    btnPesquisar.addEventListener('click', function () {
         const termoPesquisado = inputPesquisa.value;
-        atualizarTabelaPorPesquisa(termoPesquisado);
+        if (termoPesquisado.trim() !== '') {
+            pesquisarVendasPorCNPJ(termoPesquisado);
+        } else {
+            obterTodasAsVendas();
+        }
     });
-    
-    // Função para atualizar a tabela com base na pesquisa
-    function atualizarTabelaPorPesquisa(termoPesquisado) {
-        tabelaCorpo.innerHTML = '';
-        const resultados = vendas.filter(venda => {
-            // Verifica se algum campo contém o termo de pesquisa
-            return Object.values(venda).some(valor => {
-                if (valor.toString().toLowerCase().includes(termoPesquisado.toLowerCase())) {
-                    return true;
-                }
-            });
-        });
 
-        resultados.forEach(venda => {
-            const linha = criarLinhaVenda(venda);
-            tabelaCorpo.appendChild(linha);
-        });
+    btnGerarCSV.addEventListener('click', function () {
+        obterTodasAsVendas().then(vendas => gerarCSV(vendas));
+    });
+
+    btnGerarPDF.addEventListener('click', function () {
+        obterTodasAsVendas().then(vendas => gerarPDF(vendas));
+    });
+
+    function gerarCSV(vendas) {
+        const linhas = vendas.map(venda => Object.values(venda).join(','));
+
+        const csvContent = 'data:text/csv;charset=utf-8,' + linhas.join('\n');
+        
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement('a');
+        link.setAttribute('href', encodedUri);
+        link.setAttribute('download', 'relatorio.csv');
+        document.body.appendChild(link); // Required for Firefox
+        link.click();
     }
 
-
-
-    function gerarCSV() {
-        let csv = 'CNPJ;Nome da empresa;Quantidade total;Valor total;Data da venda\n';
-        vendas.forEach(venda => {
-            let linhaCSV = [
-                `"${venda.cnpj}"`,
-                `"${venda.nomeEmpresa}"`,
-                venda.quantidadeTotal,
-                `"${venda.valorTotal}"`,
-                `"${venda.dataVenda}"`
-            ].join(';');
-            csv += linhaCSV + '\n';
-        });
-        const blob = new Blob([csv], { type: 'text/csv' });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.setAttribute('hidden', '');
-        a.setAttribute('href', url);
-        a.setAttribute('download', 'historico_vendas.csv');
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-    }
-    
-    
-    
-
-    function gerarPDF() {
+    function gerarPDF(vendas) {
         const doc = new jsPDF();
-    
-        doc.setFontSize(16);
-        doc.text('Histórico de Vendas', 80, 10); // Título do documento
-    
-        let yPos = 30; // Começa um pouco mais abaixo para caber o título
-        const headers = ['CNPJ', 'Nome da empresa', 'Quantidade total', 'Valor total', 'Data da venda'];
-    
-        doc.setFontSize(12); // Tamanho de fonte para cabeçalhos
-    
-        // Posição x para cada cabeçalho (para alinhar corretamente)
-        const positions = [20, 60, 100, 140, 170];
-    
-        headers.forEach((header, index) => {
-            doc.text(header, positions[index], yPos);
+
+        const header = ['CNPJ', 'Nome da Empresa', 'Quantidade', 'Valor Total', 'Data da Venda'];
+
+        const linhas = vendas.map(venda => [
+            venda.cnpj,
+            venda.nomeEmpresa,
+            venda.quantidade,
+            Number(venda.valorTotal).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+            venda.saleDate
+        ]);
+
+        doc.autoTable({
+            head: [header],
+            body: linhas
         });
-    
-        yPos += 10; 
-    
-        doc.setFontSize(10); // Tamanho de fonte para o conteúdo
-    
-        vendas.forEach(venda => {
-            doc.text(venda.cnpj, 20, yPos);
-            doc.text(venda.nomeEmpresa, 60, yPos);
-            doc.text(venda.quantidadeTotal.toString(), 100, yPos);
-            doc.text(venda.valorTotal, 140, yPos);
-            doc.text(venda.dataVenda, 170, yPos);
-            yPos += 10;
-        });
-    
-        doc.save('historico_vendas.pdf');
+
+        doc.save('relatorio.pdf');
     }
-    
 
-    btnGerarCSV.addEventListener('click', function() {
-        gerarCSV();
-    });
-
-    btnGerarPDF.addEventListener('click', function() {
-        gerarPDF();
-    });
-
-    // Exibir todas as vendas inicialmente
-    exibirTodasAsVendas();
+    obterTodasAsVendas();
 });
 
-document.getElementById('voltar').addEventListener('click', function() {
+document.getElementById('voltar').addEventListener('click', function () {
     window.history.back();
 });

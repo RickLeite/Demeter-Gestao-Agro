@@ -10,45 +10,47 @@
 </head>
 
 <body>
-<header>
-    <button id="voltar" class="btn-voltar">
-        <i class="fas fa-arrow-left"></i> Voltar</button>
-    <h1>Histórico de Vendas</h1>
-</header>
+    <header>
+        <button id="voltar" class="btn-voltar">
+            <i class="fas fa-arrow-left"></i> Voltar
+        </button>
+        <h1>Histórico de Vendas</h1>
+    </header>
 
-<div class="main-content">
-    <section class="container">
-        <div class="header">
-            <h2>Histórico de vendas</h2>
-            <input type="text" placeholder="Pesquisar">
-            <button id="btnPesquisar">🔍</button>
-        </div>
-        <table>
-            <thead>
-            <tr>
-                <th>CNPJ</th>
-                <th>Nome da empresa</th>
-                <th>Quantidade total</th>
-                <th>Valor total</th>
-                <th>Data da venda</th>
-                <th>Ação</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!-- Os dados dos clientes serão inseridos aqui pelo JS -->
-            </tbody>
-        </table>
-    </section>
+    <div class="main-content">
+        <section class="container">
+            <div class="header">
+                <h2>Histórico de vendas</h2>
+                <input type="text" id="inputPesquisa" placeholder="Pesquisar">
+                <button id="btnPesquisar">🔍</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>CNPJ</th>
+                        <th>Nome da empresa</th>
+                        <th>Quantidade total</th>
+                        <th>Valor total</th>
+                        <th>Data da venda</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Os dados dos clientes serão inseridos aqui pelo JS -->
+                </tbody>
+            </table>
+        </section>
 
-    <section id="gerarRelatorios" class="gerarRelatorios">
-        <button>Gerar Relatório em .CSV</button>
-        <button>Gerar Relatório em PDF</button>
-    </section>
-</div>
+        <section id="gerarRelatorios" class="gerarRelatorios">
+            <button id="btnGerarCSV">Gerar Relatório em .CSV</button>
+            <button id="btnGerarPDF">Gerar Relatório em PDF</button>
+        </section>
+    </div>
 
-<footer>
-    <p>&copy; 2023 Deméter</p>
-</footer>
+    <footer>
+        <p>&copy; 2023 Deméter</p>
+    </footer>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
     <script th:src="@{/js/historicoDeVendas.js}"></script>
 </body>
