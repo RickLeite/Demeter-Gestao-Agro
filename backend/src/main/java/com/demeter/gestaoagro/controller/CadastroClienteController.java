@@ -61,8 +61,5 @@ public class CadastroClienteController {
         return ResponseEntity.ok(cadastroClienteService.saveCadastroClientes(cadastroClientes));
     }
 
-    @GetMapping("/all")
-    public List<CadastroCliente> getAllCadastroClientes() {
-        return cadastroClienteService.findAll();
-    }
+    // O método de listagem foi removido
 }

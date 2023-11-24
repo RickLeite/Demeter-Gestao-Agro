@@ -5,7 +5,6 @@ import com.demeter.gestaoagro.repository.CadastroClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CadastroClienteService {
@@ -25,9 +24,7 @@ public class CadastroClienteService {
         return cadastroClienteRepository.saveAll(cadastroClientes);
     }
 
-    public List<CadastroCliente> findAll() {
-        return cadastroClienteRepository.findAll();
-    }
+    // O método findAll foi removido.
 
     public boolean cnpjExiste(String cnpj) {
         return cadastroClienteRepository.findByCnpj(cnpj).isPresent();
