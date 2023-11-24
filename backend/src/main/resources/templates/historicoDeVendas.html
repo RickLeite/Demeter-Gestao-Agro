@@ -21,14 +21,14 @@
         <section class="container">
             <div class="header">
                 <h2>Histórico de vendas</h2>
-                <input type="text" id="inputPesquisa" placeholder="Pesquisar">
+                <input type="text" id="inputPesquisa" placeholder="Digite o CNPJ para buscar">
                 <button id="btnPesquisar">🔍</button>
             </div>
             <table>
                 <thead>
                     <tr>
                         <th>CNPJ</th>
-                        <th>Nome da empresa</th>
+                        <th>Nome Cliente</th>
                         <th>Quantidade total</th>
                         <th>Valor total</th>
                         <th>Data da venda</th>
@@ -42,8 +42,8 @@
         </section>
 
         <section id="gerarRelatorios" class="gerarRelatorios">
-            <button id="btnGerarCSV">Gerar Relatório em .CSV</button>
             <button id="btnGerarPDF">Gerar Relatório em PDF</button>
+            <button id="btnGerarExcel">Gerar Relatório em Excel</button>
         </section>
     </div>
 
@@ -52,6 +52,7 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
     <script th:src="@{/js/historicoDeVendas.js}"></script>
 </body>
 
