@@ -15,6 +15,8 @@
     <description>App de Gestao Agro</description>
     <properties>
         <java.version>17</java.version>
+        <!-- Adicionando a versão do Lombok -->
+        <lombok.version>1.18.22</lombok.version>
     </properties>
     <dependencies>
         <!-- Spring Boot Starter Dependencies -->
@@ -64,6 +66,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -74,5 +84,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

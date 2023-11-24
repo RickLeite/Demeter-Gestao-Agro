@@ -1,8 +1,10 @@
 package com.demeter.gestaoagro.repository;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
 import com.demeter.gestaoagro.model.MyUserDocument;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import java.util.Optional;
 
 public interface UserRepository extends MongoRepository<MyUserDocument, String> {
-    MyUserDocument findByUsername(String username);
+    Optional<MyUserDocument> findByUsername(String username);
 }

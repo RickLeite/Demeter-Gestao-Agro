@@ -3,9 +3,12 @@ package com.demeter.gestaoagro.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Document(collection = "users")
 public class MyUserDocument implements UserDetails {
@@ -14,12 +17,15 @@ public class MyUserDocument implements UserDetails {
     private String id;
     private String username;
     private String password;
-    // outros campos e métodos necessários
+    private List<String> roles;
+
+    // getters e setters
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // lógica para retornar as autoridades do usuário
-        return null;
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -31,8 +37,6 @@ public class MyUserDocument implements UserDetails {
     public String getUsername() {
         return username;
     }
-
-    // Métodos adicionais UserDetails
 
     @Override
     public boolean isEnabled() {
@@ -53,6 +57,4 @@ public class MyUserDocument implements UserDetails {
     public boolean isAccountNonLocked() {
         return true; // ou lógica para verificar se a conta não está bloqueada
     }
-
-    // getters e setters
 }

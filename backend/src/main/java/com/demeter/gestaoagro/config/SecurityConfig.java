@@ -9,9 +9,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.demeter.gestaoagro.service.CustomUserDetailsService;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final CustomUserDetailsService userDetailsService;
+
+    public SecurityConfig(CustomUserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -37,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .logout()
                 .permitAll()
             .and()
-            .csrf().disable(); // Desabilita CSRF temporariamente, lembre-se de ativá-lo em produção
+            .csrf().disable();
     }
 
     @Bean
