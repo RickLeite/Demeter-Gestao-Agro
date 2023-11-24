@@ -5,6 +5,7 @@ import com.demeter.gestaoagro.repository.CadastroClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CadastroClienteService {
@@ -28,5 +29,11 @@ public class CadastroClienteService {
         return cadastroClienteRepository.findAll();
     }
 
-    // Outros métodos, como busca por ID, atualização e exclusão, podem ser adicionados aqui.
+    public boolean cnpjExiste(String cnpj) {
+        return cadastroClienteRepository.findByCnpj(cnpj).isPresent();
+    }
+
+    public boolean cpfExiste(String cpf) {
+        return cadastroClienteRepository.findByCpf(cpf).isPresent();
+    }
 }
