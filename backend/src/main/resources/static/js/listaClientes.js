@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function buscarClientes() {
-        fetch('/clientes/lista') 
+        fetch('/clientes/lista')
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Erro HTTP, status ${response.status}`);
