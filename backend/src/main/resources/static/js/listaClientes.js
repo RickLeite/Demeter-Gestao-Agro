@@ -1,13 +1,32 @@
 document.addEventListener('DOMContentLoaded', function() {
     const tabelaCorpo = document.querySelector('tbody');
+    const btnPesquisar = document.querySelector('#btnPesquisar');
+    const inputPesquisa = document.querySelector('#inputPesquisa');
     const btnGerarPDF = document.querySelector('#btnGerarPDF');
     const btnGerarExcel = document.querySelector('#btnGerarExcel');
 
-    if (!tabelaCorpo || !btnGerarPDF || !btnGerarExcel) {
+    if (!tabelaCorpo || !btnPesquisar || !inputPesquisa || !btnGerarPDF || !btnGerarExcel) {
         console.error('Um ou mais elementos necessários não foram encontrados no DOM.');
         return;
     }
-    
+
+    btnPesquisar.addEventListener('click', function() {
+        buscarClientesPorNome(inputPesquisa.value);
+    });
+
+    function buscarClientesPorNome(nome) {
+        fetch(`/clientes/pesquisa?nome=${nome}`)
+            .then(response => response.json())
+            .then(dadosClientes => {
+                tabelaCorpo.innerHTML = '';
+                dadosClientes.forEach(cliente => {
+                    const linha = criarLinhaCliente(cliente);
+                    tabelaCorpo.appendChild(linha);
+                });
+            })
+            .catch(error => console.error('Erro ao buscar dados:', error));
+    }
+
     function buscarClientes() {
         fetch('/clientes/lista')
             .then(response => {

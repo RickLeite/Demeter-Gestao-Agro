@@ -1,17 +1,15 @@
 package com.demeter.gestaoagro.controller;
+
 import com.demeter.gestaoagro.model.CadastroCliente;
 import com.demeter.gestaoagro.service.ListaClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("/clientes") // Ajuste a rota conforme necessário
+@RequestMapping("/clientes")
 public class ListaClienteController {
 
     private final ListaClienteService listaClienteService;
@@ -24,6 +22,11 @@ public class ListaClienteController {
     @GetMapping("/lista")
     public List<CadastroCliente> listarTodosOsClientes() {
         return listaClienteService.listarTodos();
+    }
+
+    @GetMapping("/pesquisa")
+    public ResponseEntity<List<CadastroCliente>> buscarPorNome(@RequestParam String nome) {
+        return ResponseEntity.ok(listaClienteService.buscarPorNome(nome));
     }
 
     @DeleteMapping("/{id}")

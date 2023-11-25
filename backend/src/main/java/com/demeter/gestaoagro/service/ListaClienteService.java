@@ -1,4 +1,5 @@
 package com.demeter.gestaoagro.service;
+
 import com.demeter.gestaoagro.model.CadastroCliente;
 import com.demeter.gestaoagro.repository.CadastroClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,11 @@ public class ListaClienteService {
 
     public List<CadastroCliente> listarTodos() {
         return cadastroClienteRepository.findAll();
+    }
+
+    public List<CadastroCliente> buscarPorNome(String nome) {
+        // Método atualizado para usar a busca por correspondência parcial
+        return cadastroClienteRepository.findByNomeLike(nome);
     }
 
     public void deleteCliente(String id) {
