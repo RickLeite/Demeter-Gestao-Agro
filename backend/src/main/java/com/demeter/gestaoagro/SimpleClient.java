@@ -14,7 +14,8 @@ public class SimpleClient {
         try (Socket socket = new Socket(SERVER_IP, PORT_NUMBER);
              BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
              PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
-             BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in))) {
+             BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in)))
+        {
 
             System.out.println("Connected to the server.");
 

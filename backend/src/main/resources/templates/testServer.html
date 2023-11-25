@@ -16,12 +16,22 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
 <script>
-    // WebSocket server running on localhost with port 3000
     const socket = new SockJS('http://localhost:3000/websocket');
     const stompClient = Stomp.over(socket);
 
     stompClient.connect({}, () => {
         console.log('WebSocket Client Connected');
+
+        stompClient.subscribe('/topic/receive', (response) => {
+            try {
+                const content = JSON.parse(response.body).content;
+                console.log(`MESSAGE: + ${content}`)
+                displayMessage(`Received: ${content}`);
+            } catch (error) {
+                console.error('Error parsing JSON:', error);
+                // Handle non-JSON response here
+            }
+        });
     });
 
     function sendMessage() {
@@ -32,11 +42,6 @@
             stompClient.send("/app/hello", {}, JSON.stringify({ content: message }));
         }
     }
-
-    stompClient.subscribe('/topic/greetings', (response) => {
-        const content = JSON.parse(response.body).content;
-        displayMessage(`Server says: ${content}`);
-    });
 
     function displayMessage(message) {
         const messagesDiv = document.getElementById('messages');
