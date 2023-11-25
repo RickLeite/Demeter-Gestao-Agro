@@ -1,46 +1,50 @@
 <!DOCTYPE html>
-<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Clientes</title>
-    <link rel="stylesheet" th:href="@{/css/listaClientes.css}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Lista De Clientes</title>
+    <link rel="stylesheet" th:href="@{/css/listaClientes.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
+
 <body>
     <header>
         <button id="voltar" class="btn-voltar">
             <i class="fas fa-arrow-left"></i> Voltar
         </button>
-        <h1>Lista de clientes</h1>
+        <h1>Lista De Clientes</h1>
     </header>
 
     <div class="main-content">
-        <section class="search-section">
-            <input type="text" id="search" placeholder="Pesquisar cliente...">
-            <button id="btnSearch">🔍</button>
+        <section class="container">
+            <div class="header">
+                <h2>Lista De Clientes</h2>
+                <input type="text" id="inputPesquisa" placeholder="Digite o nome do cliente para buscar">
+                <button id="btnPesquisar">🔍</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome Cliente</th>
+                        <th>Data de Nascimento</th>
+                        <th>CPF</th>
+                        <th>Nome da Empresa</th>
+                        <th>CNPJ</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Os dados dos clientes serão inseridos aqui pelo JS -->
+                </tbody>
+            </table>
         </section>
 
-        <table id="clientes-table">
-            <thead>
-            <tr>
-                <th>Id do cliente</th>
-                <th>Nome do cliente</th>
-                <th>Data de nascimento</th>
-                <th>CPF</th>
-                <th>Nome da empresa</th>
-                <th>CNPJ</th>
-                <th>Ação</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!-- Os dados dos clientes serão inseridos aqui pelo JS -->
-            </tbody>
-        </table>
-
         <section id="gerarRelatorios" class="gerarRelatorios">
-            <button id="gerarCSV">Gerar Relatório em .CSV</button>
-            <button id="gerarPDF">Gerar Relatório em PDF</button>
+            <button id="btnGerarPDF">Gerar Relatório em PDF</button>
+            <button id="btnGerarExcel">Gerar Relatório em Excel</button>
         </section>
     </div>
 
@@ -49,6 +53,8 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
     <script th:src="@{/js/listaClientes.js}"></script>
 </body>
+
 </html>

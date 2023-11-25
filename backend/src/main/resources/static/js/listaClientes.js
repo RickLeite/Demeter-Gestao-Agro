@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     const tabelaCorpo = document.querySelector('tbody');
-    const btnGerarCSV = document.querySelector('#gerarCSV');
-    const btnGerarPDF = document.querySelector('#gerarPDF');
+    const btnGerarPDF = document.querySelector('#btnGerarPDF');
+    const btnGerarExcel = document.querySelector('#btnGerarExcel');
 
-    if (!tabelaCorpo || !btnGerarCSV || !btnGerarPDF) {
+    if (!tabelaCorpo || !btnGerarPDF || !btnGerarExcel) {
         console.error('Um ou mais elementos necessários não foram encontrados no DOM.');
         return;
     }
-
+    
     function buscarClientes() {
         fetch('/clientes/lista')
             .then(response => {
