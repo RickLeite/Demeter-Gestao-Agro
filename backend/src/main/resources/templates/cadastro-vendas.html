@@ -7,6 +7,8 @@
     <title>Cadastrar Vendas</title>
     <link rel="stylesheet" th:href="@{/css/cadastro-vendas.css}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Inclua a versão 1.5.3 do jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
 </head>
 
 <body>
@@ -34,7 +36,6 @@
             <label for="nome-cliente">Nome do Cliente:</label>
             <input type="text" id="nome-cliente" required />
 
-            <!-- Campo de CNPJ -->
             <label for="cnpj">CNPJ:</label>
             <input type="text" id="cnpj" required />
 
@@ -59,6 +60,7 @@
         <p>&copy; 2023 Deméter</p>
     </footer>
 
+    <!-- Inclua o seu script JavaScript -->
     <script th:src="@{/js/cadastro-vendas.js}"></script>
 </body>
 

@@ -57,10 +57,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (!response.ok) {
                     throw new Error('Erro ao cadastrar a venda.');
                 }
-                return response.text(); // Use text() em vez de json()
+                return response.json(); // Use json() em vez de text()
             })
-            .then(message => {
-                alert(message); // Exibe uma mensagem de sucesso
+            .then(data => {
+                alert(data.message); // Exibe uma mensagem de sucesso ou erro do servidor
                 form.reset(); // Limpa o formulário
             })
             .catch(error => {
@@ -95,44 +95,45 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     const emitirNotaButton = document.getElementById("btn-emitir-nota");
+
     emitirNotaButton.addEventListener("click", function () {
         const pdf = new jsPDF();
-
+    
         pdf.setFontSize(16);
         pdf.text("Nota Fiscal", 10, 10);
-
+    
         const nomeCliente = document.querySelector("#nome-cliente").value;
         const cnpj = document.querySelector("#cnpj").value;
         const dataVenda = document.querySelector("#saleDate").value;
-
+    
         pdf.setFontSize(12);
         pdf.text(`Nome do Cliente: ${nomeCliente}`, 10, 30);
         pdf.text(`CNPJ: ${cnpj}`, 10, 40);
         pdf.text(`Data De Venda: ${dataVenda}`, 10, 50);
-
+    
         const produtos = document.querySelectorAll(".produto");
         let yOffset = 60;
-
-        produtos.forEach(produto => {
+    
+        produtos.forEach((produto, index) => {
             const nomeProduto = produto.querySelector(".nome-produto").value;
             const quantidade = produto.querySelector(".quantidade").value;
             const valorUnitario = produto.querySelector(".valor-unitario").value;
-
-            pdf.text(`Nome do Produto: ${nomeProduto}`, 10, yOffset);
+    
+            pdf.text(`Produto ${index + 1}: ${nomeProduto}`, 10, yOffset);
             yOffset += 10;
             pdf.text(`Quantidade: ${quantidade}`, 10, yOffset);
             yOffset += 10;
             pdf.text(`Valor Unitário (R$): ${valorUnitario}`, 10, yOffset);
             yOffset += 10;
         });
-
+    
         const total = document.getElementById("total").innerText;
         yOffset += 10;
         pdf.text(`Valor Total: ${total}`, 10, yOffset);
-
+    
         pdf.save("nota_fiscal.pdf");
     });
-
+    
     document.getElementById('voltar').addEventListener('click', function () {
         window.history.back();
     });
