@@ -41,12 +41,41 @@ document.addEventListener("DOMContentLoaded", function () {
     function adicionarProdutoNaTabela(produto) {
         const row = document.createElement("tr");
         row.innerHTML = `
-            <td>${produto.id}</td>
             <td>${produto.nomeProduto}</td>
             <td>${produto.quantidade}</td>
             <td>${produto.preco}</td>
-            <td>Ações</td>
+            <td>
+                <button class="excluir-button" data-id="${produto.id}">Excluir</button>
+            </td>
         `;
         listaProdutos.appendChild(row);
+
+        // Add event listener for the delete button
+        const deleteButton = row.querySelector('.excluir-button');
+        deleteButton.addEventListener('click', function () {
+            const productId = this.getAttribute('data-id');
+            excluirProdutoAPI(productId);
+        });
+    }
+
+    function excluirProdutoAPI(id) {
+        if (!id) {
+            console.error('ID is undefined or null.');
+            return;
+        }
+
+        fetch(`http://localhost:3000/estoque/remove/${id}`, {
+            method: 'DELETE',
+        })
+            .then(response => {
+                if (response.ok) {
+                    // If the delete request is successful, remove the corresponding row from the table
+                    const rowToRemove = document.querySelector(`[data-id="${id}"]`).closest('tr');
+                    rowToRemove.remove();
+                } else {
+                    console.error('Erro ao excluir produto:', response.statusText);
+                }
+            })
+            .catch(error => console.error('Erro ao excluir produto:', error));
     }
 });

@@ -1,11 +1,12 @@
 package com.demeter.gestaoagro.model;
-
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 
 public class Estoque {
 
+
     @Id
-    private String id;
+    public ObjectId id;
 
     private String nomeProduto;
     private int quantidade;

@@ -29,6 +29,16 @@ public class EstoqueService {
     }
 
     public void removeEstoque(ObjectId id) {
-        estoqueRepository.deleteById(id.toHexString());
+        estoqueRepository.deleteById(id);
     }
+
+    public Estoque getLastAddedEstoque() {
+        List<Estoque> estoques = estoqueRepository.findAll();
+        if (!estoques.isEmpty()) {
+            return estoques.get(estoques.size() - 1);
+        }
+        return null;
+    }
+
 }
+
