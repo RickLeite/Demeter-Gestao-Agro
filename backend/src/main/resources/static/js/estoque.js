@@ -31,11 +31,11 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             body: JSON.stringify(produto)
         })
-        .then(response => response.json())
-        .then(data => {
-            adicionarProdutoNaTabela(data);
-        })
-        .catch(error => console.error('Erro ao adicionar produto:', error));
+            .then(response => response.json())
+            .then(data => {
+                adicionarProdutoNaTabela(data);
+            })
+            .catch(error => console.error('Erro ao adicionar produto:', error));
     }
 
     function adicionarProdutoNaTabela(produto) {
@@ -53,29 +53,23 @@ document.addEventListener("DOMContentLoaded", function () {
         // Add event listener for the delete button
         const deleteButton = row.querySelector('.excluir-button');
         deleteButton.addEventListener('click', function () {
-            const productId = this.getAttribute('data-id');
-            excluirProdutoAPI(productId);
+            removeLastEstoqueAPI();
         });
     }
 
-    function excluirProdutoAPI(id) {
-        if (!id) {
-            console.error('ID is undefined or null.');
-            return;
-        }
-
-        fetch(`http://localhost:3000/estoque/remove/${id}`, {
+    function removeLastEstoqueAPI() {
+        fetch('http://127.0.0.1:3000/estoque/removeLast', {
             method: 'DELETE',
         })
             .then(response => {
                 if (response.ok) {
-                    // If the delete request is successful, remove the corresponding row from the table
-                    const rowToRemove = document.querySelector(`[data-id="${id}"]`).closest('tr');
-                    rowToRemove.remove();
+                    const rows = document.querySelectorAll('#lista-produtos tr');
+                    const lastRow = rows[rows.length - 1];
+                    lastRow.remove();
                 } else {
-                    console.error('Erro ao excluir produto:', response.statusText);
+                    console.error('Erro ao remover último produto:', response.statusText);
                 }
             })
-            .catch(error => console.error('Erro ao excluir produto:', error));
+            .catch(error => console.error('Erro ao remover último produto:', error));
     }
 });
