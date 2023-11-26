@@ -2,6 +2,7 @@ package com.demeter.gestaoagro.controller;
 import com.demeter.gestaoagro.service.EstoqueService;
 import com.demeter.gestaoagro.model.Estoque;
 
+import org.bson.types.ObjectId;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,4 +31,11 @@ public class EstoqueController {
     public List<Estoque> addEstoques(@RequestBody List<Estoque> estoques) {
         return estoqueService.saveEstoques(estoques);
     }
+
+    @DeleteMapping("/remove/{id}")
+    public void removeEstoque(@PathVariable String id) {
+        estoqueService.removeEstoque(new ObjectId(id));
+    }
+
+
 }
