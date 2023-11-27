@@ -23,13 +23,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function criarLinhaProduto(produto) {
+        const preco = Number(produto.preco);
+        const quantidade = Number(produto.quantidade);
+        const valorTotal = preco * quantidade;
+
         const linha = document.createElement('tr');
         linha.innerHTML = `
-            <td>${produto.idProduto}</td>
-            <td>${produto.nomeProduto}</td>
-            <td>${produto.quantidade}</td>
-            <td>${produto.valorUnitario}</td>
-            <td>${produto.valorTotal}</td>
+            <td>${produto.idProduto || 'Indisponível'}</td>
+            <td>${produto.nomeProduto || 'Indisponível'}</td>
+            <td>${quantidade || 'Indisponível'}</td>
+            <td>R$ ${preco.toFixed(2) || '0.00'}</td>
+            <td>R$ ${valorTotal.toFixed(2) || '0.00'}</td>
             <td>
                 <button class="btn-delete"><i class="fas fa-trash-alt"></i> Excluir</button>
             </td>
@@ -37,38 +41,32 @@ document.addEventListener('DOMContentLoaded', function() {
         return linha;
     }
 
+    btnBuscar.addEventListener('click', function() {
+        const pesquisa = inputPesquisa.value;
+        atualizarTabela(pesquisa);
+    });
+
     function atualizarTabela(pesquisa) {
         buscarProdutos().then(produtos => {
             tabelaCorpo.innerHTML = '';
-            produtos.filter(produto => {
-                for (const propriedade in produto) {
-                    if (produto[propriedade].toString().toLowerCase().includes(pesquisa.toLowerCase())) {
-                        return true;
-                    }
-                }
-                return false;
-            }).forEach(produto => {
+            produtos.filter(produto => produto.nomeProduto.toLowerCase().includes(pesquisa.toLowerCase()))
+            .forEach(produto => {
                 const linha = criarLinhaProduto(produto);
                 tabelaCorpo.appendChild(linha);
             });
         });
     }
 
-    btnBuscar.addEventListener('click', function() {
-        const pesquisa = inputPesquisa.value;
-        atualizarTabela(pesquisa);
-    });
-
     function gerarCSVProdutos() {
         buscarProdutos().then(produtos => {
             let csv = 'ID;Nome do Produto;Quantidade;Valor Unitario;Valor Total\n';
             produtos.forEach(produto => {
                 let linhaCSV = [
-                    `"${produto.idProduto}"`,
-                    `"${produto.nomeProduto}"`,
-                    `"${produto.quantidade}"`,
-                    `"${produto.valorUnitario}"`,
-                    `"${produto.valorTotal}"`
+                    produto.idProduto,
+                    produto.nomeProduto,
+                    produto.quantidade,
+                    produto.preco,
+                    (produto.preco * produto.quantidade).toFixed(2)
                 ].join(';');
                 csv += linhaCSV + '\n';
             });
@@ -83,9 +81,9 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.removeChild(a);
         });
     }
-    
+
     btnGerarCSV.addEventListener('click', gerarCSVProdutos);
-    
+
     function gerarPDF() {
         buscarProdutos().then(produtos => {
             const doc = new jsPDF();
@@ -104,14 +102,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 doc.text(produto.idProduto.toString(), 10, yPos);
                 doc.text(produto.nomeProduto, 30, yPos);
                 doc.text(produto.quantidade.toString(), 70, yPos);
-                doc.text(produto.valorUnitario, 100, yPos);
-                doc.text(produto.valorTotal, 130, yPos);
+                doc.text(produto.preco.toString(), 100, yPos);
+                doc.text((produto.preco * produto.quantidade).toFixed(2), 130, yPos);
                 yPos += 10;
             });
             doc.save('lista_produtos.pdf');
         });
     }
-    
+
     btnGerarPDF.addEventListener('click', gerarPDF);
 
     if (btnVoltar) {
