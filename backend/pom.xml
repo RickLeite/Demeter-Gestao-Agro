@@ -19,7 +19,11 @@
         <lombok.version>1.18.22</lombok.version>
     </properties>
     <dependencies>
-        <!-- Spring Boot Starter Dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>

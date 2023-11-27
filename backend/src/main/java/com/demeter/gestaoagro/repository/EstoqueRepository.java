@@ -13,4 +13,5 @@ public interface EstoqueRepository extends MongoRepository<Estoque, ObjectId> {
     List<Estoque> findAll();
     List<Estoque> findByNomeProduto(@Param("nomeProduto") String nomeProduto);
 
+
 }
