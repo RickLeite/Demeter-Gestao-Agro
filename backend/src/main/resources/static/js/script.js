@@ -10,17 +10,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
         stompClient.subscribe('/topic/receive', (response) => {
             try {
-                const content = JSON.parse(response.body).content;
-                console.log(`MESSAGE: + ${content}`)
-                displayMessage(`Received: ${content}`);
+                const jsonResponse = JSON.parse(response.body);
+                const serverResponse = jsonResponse.response;
+                const messageContent = jsonResponse.message.content;
+
+                console.log(`Server Response: ${serverResponse}`);
+                console.log(`Message Content: ${messageContent}`);
+
+                // Display the message content
+                displayMessage(` ${serverResponse}`);
             } catch (error) {
                 console.error('Error parsing JSON:', error);
                 // Handle non-JSON response here
             }
         });
+
     });
 
-    // Your existing event listeners
+    // Add event listener for the send message button
+    const sendBtn = document.getElementById('sendMessageBtn');
+    if (sendBtn) {
+        sendBtn.addEventListener('click', sendMessage);
+    }
+
+    // Add event listeners for the chatbot buttons
     const openBtn = document.getElementById('open-chatbot-btn');
     const closeBtn = document.getElementById('close-chatbot-btn');
 
@@ -31,14 +44,20 @@ document.addEventListener('DOMContentLoaded', function () {
         closeBtn.addEventListener('click', closeChat);
     }
 
-    // Add event listener for the send message button
-    const sendBtn = document.getElementById('sendMessageBtn');
-    if (sendBtn) {
-        sendBtn.addEventListener('click', sendMessage);
-    }
-
     exibirComentarios();
 });
+
+
+
+// Add this function to your script.js file
+
+function displayMessage(message) {
+    const messagesDiv = document.querySelector('.messages');
+    const newMessage = document.createElement('p');
+    newMessage.innerText = message;
+    messagesDiv.appendChild(newMessage);
+}
+
 
 function sendMessage() {
     const messageInput = document.getElementById('messageInput');
@@ -72,14 +91,11 @@ function closeChat() {
 
 // Other functions remain the same...
 
-
 const comentarios = [
     { nome: 'Nome do Usuário', texto: 'Este é um comentário de exemplo. A plataforma é excelente!' },
     { nome: 'Outro Usuário', texto: 'Estou muito satisfeito com os produtos oferecidos!' }
 ];
 
-// Função para exibir os comentários na página
-// Função para exibir os comentários na página
 function exibirComentarios() {
     const areaComentarios = document.getElementById('area-comentarios');
 
@@ -88,7 +104,7 @@ function exibirComentarios() {
         divComentario.className = 'comentario-item';
 
         const h3Nome = document.createElement('h3');
-        h3Nome.innerText = 'Nome: ' + comentario.nome; // Acrescentado "Nome: " antes do nome do usuário.
+        h3Nome.innerText = 'Nome: ' + comentario.nome;
 
         const pTexto = document.createElement('p');
         pTexto.innerText = comentario.texto;
@@ -98,20 +114,3 @@ function exibirComentarios() {
         areaComentarios.appendChild(divComentario);
     });
 }
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Adicionar ouvintes de evento aos botões "Abrir" e "Fechar" Chatbot
-    const openBtn = document.getElementById('open-chatbot-btn');
-    const closeBtn = document.getElementById('close-chatbot-btn');
-
-    if(openBtn) {
-        openBtn.addEventListener('click', openChat);
-    }
-    if(closeBtn) {
-        closeBtn.addEventListener('click', closeChat);
-    }
-
-    exibirComentarios();
-});
-

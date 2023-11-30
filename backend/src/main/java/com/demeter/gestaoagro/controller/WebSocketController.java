@@ -1,4 +1,6 @@
 package com.demeter.gestaoagro.controller;
+
+import com.google.gson.Gson;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
@@ -8,15 +10,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class WebSocketController {
 
     private final SimpMessagingTemplate messagingTemplate;
-    private int connectionCount = 0;
+    private final Gson gson; // GSON's Gson
 
-    public WebSocketController(SimpMessagingTemplate messagingTemplate) {
+    public WebSocketController(SimpMessagingTemplate messagingTemplate, Gson gson) {
         this.messagingTemplate = messagingTemplate;
+        this.gson = gson;
     }
 
     @MessageMapping("/hello")
@@ -49,14 +54,25 @@ public class WebSocketController {
             String serverResponse = reader.readLine();
             System.out.println("Server response: " + serverResponse);
 
+            // Convert messages to JSON format using GSON
+            String jsonMessage = convertToJSON(message, serverResponse);
+
             // Broadcast the response to all subscribers of the "/topic/receive" destination
-            messagingTemplate.convertAndSend("/topic/receive", "Handled Message: " + message + ", Server Response: " + serverResponse);
+            messagingTemplate.convertAndSend("/topic/receive", jsonMessage);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    private String convertToJSON(String message, String serverResponse) {
+        // Create a Map to represent the message and response
+        Map<String, String> messageMap = new HashMap<>();
+        messageMap.put("message", message);
+        messageMap.put("response", serverResponse);
+
+        // Convert the Map to JSON string using GSON
+        return gson.toJson(messageMap);
+    }
 }
-
-
 

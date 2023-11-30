@@ -24,7 +24,6 @@ public class GestaoagroApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(GestaoagroApplication.class, args);
-        System.out.println("Links: ");
     }
 
     @Bean
