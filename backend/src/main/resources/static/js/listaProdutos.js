@@ -6,140 +6,103 @@ document.addEventListener('DOMContentLoaded', function() {
     const btnGerarPDF = document.getElementById('btnGerarPDF');
     const btnVoltar = document.getElementById('voltar');
 
-    function buscarProdutos() {
-        return fetch('/produtos')
-            .then(response => response.json())
-            .catch(error => console.error('Erro ao buscar produtos:', error));
-    }
+    const buscarProdutos = () => fetch('/produtos').then(response => response.json());
 
-    function exibirTodosProdutos() {
-        buscarProdutos().then(produtos => {
-            tabelaCorpo.innerHTML = '';
-            produtos.forEach(produto => {
-                const linha = criarLinhaProduto(produto);
-                tabelaCorpo.appendChild(linha);
-            });
-        });
-    }
-
-    function criarLinhaProduto(produto) {
+    const criarLinhaProduto = produto => {
         const preco = Number(produto.preco);
         const quantidade = Number(produto.quantidade);
         const valorTotal = preco * quantidade;
-
         const linha = document.createElement('tr');
         linha.innerHTML = `
-            <td>${produto.id || 'Indisponível'}</td>
-            <td>${produto.nomeProduto || 'Indisponível'}</td>
-            <td>${quantidade || 'Indisponível'}</td>
-            <td>R$ ${preco.toFixed(2) || '0.00'}</td>
-            <td>R$ ${valorTotal.toFixed(2) || '0.00'}</td>
+            <td>${produto.id}</td>
+            <td>${produto.nomeProduto}</td>
+            <td>${quantidade}</td>
+            <td>R$ ${preco.toFixed(2)}</td>
+            <td>R$ ${valorTotal.toFixed(2)}</td>
             <td>
                 <button class="btn-delete"><i class="fas fa-trash-alt"></i> Excluir</button>
             </td>
         `;
         return linha;
-    }
+    };
 
-    document.addEventListener('click', function(event) {
+    const exibirTodosProdutos = () => {
+        buscarProdutos().then(produtos => {
+            tabelaCorpo.innerHTML = '';
+            produtos.forEach(produto => {
+                tabelaCorpo.appendChild(criarLinhaProduto(produto));
+            });
+        });
+    };
+
+    document.addEventListener('click', event => {
         if (event.target.classList.contains('btn-delete')) {
-            const linha = event.target.closest('tr');
-            const idProduto = linha.querySelector('td').textContent;
-            excluirProduto(idProduto);
+            const idProduto = event.target.closest('tr').querySelector('td').textContent;
+            fetch(`/produtos/${idProduto}`, { method: 'DELETE' })
+                .then(response => {
+                    if (response.ok) exibirTodosProdutos();
+                    else alert('Erro ao excluir o produto');
+                });
         }
     });
 
-    btnBuscar.addEventListener('click', function() {
-        const pesquisa = inputPesquisa.value;
-        atualizarTabela(pesquisa);
-    });
-
-    function atualizarTabela(pesquisa) {
+    btnBuscar.addEventListener('click', () => {
+        const pesquisa = inputPesquisa.value.toLowerCase();
         buscarProdutos().then(produtos => {
             tabelaCorpo.innerHTML = '';
-            produtos.filter(produto => produto.nomeProduto.toLowerCase().includes(pesquisa.toLowerCase()))
-            .forEach(produto => {
-                const linha = criarLinhaProduto(produto);
-                tabelaCorpo.appendChild(linha);
-            });
+            produtos.filter(produto => produto.nomeProduto.toLowerCase().includes(pesquisa))
+                .forEach(produto => tabelaCorpo.appendChild(criarLinhaProduto(produto)));
         });
-    }
+    });
 
-    function excluirProduto(idProduto) {
-        fetch(`/produtos/${idProduto}`, {
-            method: 'DELETE'
-        })
-        .then(response => {
-            if (response.ok) {
-                exibirTodosProdutos();
-            } else {
-                alert('Erro ao excluir o produto');
-            }
-        })
-        .catch(error => console.error('Erro ao excluir produto:', error));
-    }
-    
-    function gerarCSVProdutos() {
+    const gerarCSVProdutos = () => {
         buscarProdutos().then(produtos => {
             let csv = 'ID;Nome do Produto;Quantidade;Valor Unitario;Valor Total\n';
             produtos.forEach(produto => {
-                let linhaCSV = [
-                    produto.id,
-                    produto.nomeProduto,
-                    produto.quantidade,
-                    produto.preco,
-                    (produto.preco * produto.quantidade).toFixed(2)
-                ].join(';');
-                csv += linhaCSV + '\n';
+                csv += `${produto.id};${produto.nomeProduto};${produto.quantidade};${produto.preco};${(produto.preco * produto.quantidade).toFixed(2)}\n`;
             });
             const blob = new Blob([csv], { type: 'text/csv' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
-            a.setAttribute('hidden', '');
-            a.setAttribute('href', url);
-            a.setAttribute('download', 'lista_produtos.csv');
-            document.body.appendChild(a);
+            a.href = url;
+            a.download = 'lista_produtos.csv';
             a.click();
-            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
         });
-    }
-    
+    };
+
     btnGerarCSV.addEventListener('click', gerarCSVProdutos);
-    
-    function gerarPDF() {
+
+    const gerarPDF = () => {
         buscarProdutos().then(produtos => {
+            const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            doc.setFontSize(16);
-            doc.text('Lista de Produtos', 80, 10);
-            let yPos = 30;
-            const headers = ['ID', 'Nome do Produto', 'Quantidade', 'Valor Unitário', 'Valor Total'];
-            doc.setFontSize(12);
-            const positions = [10, 30, 70, 100, 130];
-            headers.forEach((header, index) => {
-                doc.text(header, positions[index], yPos);
+            const headers = [['ID', 'Nome do Produto', 'Quantidade', 'Valor Unitário', 'Valor Total']];
+            const data = produtos.map(produto => [
+                produto.id,
+                produto.nomeProduto,
+                produto.quantidade.toString(),
+                `R$ ${produto.preco.toFixed(2)}`,
+                `R$ ${(produto.preco * produto.quantidade).toFixed(2)}`
+            ]);
+            doc.autoTable({
+                head: headers,
+                body: data,
+                didDrawPage: data => {
+                    doc.setFontSize(18);
+                    doc.text('Relatório de Produtos', data.settings.margin.left, 10);
+                },
+                margin: { top: 20 }
             });
-            yPos += 10;
-            doc.setFontSize(10);
-            produtos.forEach(produto => {
-                doc.text(produto.id.toString(), 10, yPos);
-                doc.text(produto.nomeProduto, 30, yPos);
-                doc.text(produto.quantidade.toString(), 70, yPos);
-                doc.text(produto.preco.toString(), 100, yPos);
-                doc.text((produto.preco * produto.quantidade).toFixed(2), 130, yPos);
-                yPos += 10;
-            });
-            doc.save('lista_produtos.pdf');
+            doc.save('lista-produtos.pdf');
         });
-    }
-    
+    };
+
     btnGerarPDF.addEventListener('click', gerarPDF);
-    
+
     if (btnVoltar) {
-        btnVoltar.addEventListener('click', function() {
-            window.history.back();
-        });
+        btnVoltar.addEventListener('click', () => window.history.back());
     }
-    
+
     exibirTodosProdutos();
-    
 });

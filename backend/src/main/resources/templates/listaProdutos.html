@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +7,6 @@
     <link rel="stylesheet" th:href="@{/css/listaProdutos.css}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
-
 <body>
 <header>
     <button id="voltar" class="btn-voltar">
@@ -16,13 +14,12 @@
     </button>
     <h1>Lista de Produtos</h1>
 </header>
-
 <div class="main-content">
     <section class="container">
         <div class="header">
             <h2>Lista de Produtos</h2>
             <input type="text" placeholder="Insira o nome do produto">
-            <button id="btnBuscar">🔍</button> <!-- Altere o ID aqui -->
+            <button id="btnBuscar">🔍</button>
         </div>
         <table>
             <thead>
@@ -36,22 +33,19 @@
             </tr>
             </thead>
             <tbody>
-            <!-- Os dados dos clientes serão inseridos aqui pelo JS -->
             </tbody>
         </table>
     </section>
-
     <section id="gerarRelatorios" class="gerarRelatorios">
-        <button id="btnGerarCSV">Gerar Relatório em .CSV</button> <!-- Adicione o ID aqui -->
-        <button id="btnGerarPDF">Gerar Relatório em PDF</button> <!-- Adicione o ID aqui -->
+        <button id="btnGerarCSV">Gerar Relatório em .CSV</button>
+        <button id="btnGerarPDF">Gerar Relatório em PDF</button>
     </section>
 </div>
-
 <footer>
     <p>&copy; 2023 Deméter</p>
 </footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
 <script th:src="@{/js/listaProdutos.js}"></script>
 </body>
-
 </html>
