@@ -1,26 +1,35 @@
 package com.demeter.gestaoagro.service;
 
-import org.springframework.stereotype.Service;
 import com.demeter.gestaoagro.model.Venda;
 import com.demeter.gestaoagro.repository.VendaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class VendaService {
-    @Autowired
-    private VendaRepository vendaRepository;
 
-    public void cadastrarVenda(Venda venda) {
-        vendaRepository.save(venda);
+    private final VendaRepository vendaRepository;
+
+    public VendaService(VendaRepository vendaRepository) {
+        this.vendaRepository = vendaRepository;
     }
 
-    public List<Venda> obterVendasPorCnpj(String cnpj) {
+    public Optional<Venda> cadastrarVenda(Venda venda) {
+        // Lógica para gerar um ID para a venda.
+        String codigoVenda = UUID.randomUUID().toString();
+        venda.setCodigoVenda(codigoVenda);
+
+        return Optional.of(vendaRepository.save(venda));
+    }
+
+    public List<Venda> listarVendasPorCnpj(String cnpj) {
         return vendaRepository.findByCnpj(cnpj);
     }
 
-    public List<Venda> obterTodasAsVendas() {
+    public List<Venda> listarTodasAsVendas() {
         return vendaRepository.findAll();
     }
 }

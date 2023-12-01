@@ -13,9 +13,10 @@ import java.util.List;
 public class Venda {
     @Id
     private String id;
+    private String codigoVenda;
     private String nomeCliente;
     private String cnpj;
     private String saleDate;
-    private List<Produto> produtos;
+    private List<Produto> produtos; //lista dos produtos
     private double valorTotal;
 }
