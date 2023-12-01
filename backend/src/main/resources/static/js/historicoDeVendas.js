@@ -27,8 +27,10 @@ document.addEventListener('DOMContentLoaded', function () {
         linha.innerHTML = `
             <td>${venda.cnpj}</td>
             <td>${venda.nomeCliente}</td>
+            <td>${venda.codigoVenda}</td>
             <td>${venda.produtos.reduce((total, produto) => total + produto.quantidade, 0)}</td>
             <td>${Number(venda.valorTotal).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+            <td>${Number(venda.produtos[0]?.valorUnitario || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
             <td>${venda.saleDate}</td>
             <td>
                 <button class="btn-delete" data-id="${venda.id}">
@@ -36,12 +38,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 </button>
             </td>
         `;
-
+    
         linha.querySelector('.btn-delete').addEventListener('click', function () {
             const vendaId = venda.id;
             excluirVenda(vendaId);
         });
-
+    
         return linha;
     }
 
@@ -89,12 +91,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 { text: 'Relatório de Vendas', style: 'header' },
                 {
                     table: {
-                        headers: ['CNPJ', 'Nome Cliente', 'Quantidade', 'Valor Total', 'Data da Venda'],
+                        headers: ['CNPJ', 'Nome Cliente', 'Código da Venda', 'Quantidade', 'Valor Total', 'Valor Unitário', 'Data da Venda'],
                         body: vendas.map(venda => [
                             venda.cnpj,
                             venda.nomeCliente,
+                            venda.codigoVenda,
                             venda.produtos.reduce((total, produto) => total + produto.quantidade, 0),
                             Number(venda.valorTotal).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+                            Number(venda.produtos[0]?.valorUnitario || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
                             venda.saleDate
                         ])
                     }
@@ -112,14 +116,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function gerarExcel(vendas) {
-        const excelData = [['CNPJ', 'Nome Cliente', 'Quantidade', 'Valor Total', 'Data da Venda']];
+        const excelData = [['CNPJ', 'Nome Cliente', 'Código da Venda', 'Quantidade', 'Valor Total', 'Valor Unitário', 'Data da Venda']];
 
         vendas.forEach(venda => {
             const vendaData = [
                 venda.cnpj,
                 venda.nomeCliente,
+                venda.codigoVenda,
                 venda.produtos.reduce((total, produto) => total + produto.quantidade, 0),
                 Number(venda.valorTotal).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+                Number(venda.produtos[0]?.valorUnitario || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
                 venda.saleDate
             ];
 

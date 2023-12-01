@@ -28,24 +28,30 @@
         <section class="container">
             <div class="header">
                 <h2>Histórico de vendas</h2>
+            </div>
+            <div class="search-bar">
                 <input type="text" id="inputPesquisa" placeholder="Digite o CNPJ para buscar">
                 <button id="btnPesquisar">🔍</button>
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>CNPJ</th>
-                        <th>Nome Cliente</th>
-                        <th>Quantidade total</th>
-                        <th>Valor total</th>
-                        <th>Data da venda</th>
-                        <th>Ação</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Os dados dos clientes serão inseridos aqui pelo JS -->
-                </tbody>
-            </table>
+            <div class="historico-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>CNPJ</th>
+                            <th>Nome Cliente</th>
+                            <th>Código da Venda</th>
+                            <th>Quantidade total</th>
+                            <th>Valor total</th>
+                            <th>Valor Unitário</th>
+                            <th>Data da venda</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Os dados dos clientes serão inseridos aqui pelo JS -->
+                    </tbody>
+                </table>
+            </div>
         </section>
 
         <section id="gerarRelatorios" class="gerarRelatorios">
