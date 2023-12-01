@@ -3,14 +3,15 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 
 public class Estoque {
-
-
     @Id
     public ObjectId id;
-
     private String nomeProduto;
     private int quantidade;
     private double preco;
+
+    public String getId() {
+        return id.toHexString();
+    }
 
     public String getNomeProduto() {
         return nomeProduto;
@@ -35,5 +36,4 @@ public class Estoque {
     public void setPreco(double preco) {
         this.preco = preco;
     }
-
 }

@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const linha = document.createElement('tr');
         linha.innerHTML = `
-            <td>${produto.idProduto || 'Indisponível'}</td>
+            <td>${produto.id || 'Indisponível'}</td>
             <td>${produto.nomeProduto || 'Indisponível'}</td>
             <td>${quantidade || 'Indisponível'}</td>
             <td>R$ ${preco.toFixed(2) || '0.00'}</td>
@@ -40,6 +40,14 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         return linha;
     }
+
+    document.addEventListener('click', function(event) {
+        if (event.target.classList.contains('btn-delete')) {
+            const linha = event.target.closest('tr');
+            const idProduto = linha.querySelector('td').textContent;
+            excluirProduto(idProduto);
+        }
+    });
 
     btnBuscar.addEventListener('click', function() {
         const pesquisa = inputPesquisa.value;
@@ -57,12 +65,26 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    function excluirProduto(idProduto) {
+        fetch(`/produtos/${idProduto}`, {
+            method: 'DELETE'
+        })
+        .then(response => {
+            if (response.ok) {
+                exibirTodosProdutos();
+            } else {
+                alert('Erro ao excluir o produto');
+            }
+        })
+        .catch(error => console.error('Erro ao excluir produto:', error));
+    }
+    
     function gerarCSVProdutos() {
         buscarProdutos().then(produtos => {
             let csv = 'ID;Nome do Produto;Quantidade;Valor Unitario;Valor Total\n';
             produtos.forEach(produto => {
                 let linhaCSV = [
-                    produto.idProduto,
+                    produto.id,
                     produto.nomeProduto,
                     produto.quantidade,
                     produto.preco,
@@ -81,9 +103,9 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.removeChild(a);
         });
     }
-
+    
     btnGerarCSV.addEventListener('click', gerarCSVProdutos);
-
+    
     function gerarPDF() {
         buscarProdutos().then(produtos => {
             const doc = new jsPDF();
@@ -99,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
             yPos += 10;
             doc.setFontSize(10);
             produtos.forEach(produto => {
-                doc.text(produto.idProduto.toString(), 10, yPos);
+                doc.text(produto.id.toString(), 10, yPos);
                 doc.text(produto.nomeProduto, 30, yPos);
                 doc.text(produto.quantidade.toString(), 70, yPos);
                 doc.text(produto.preco.toString(), 100, yPos);
@@ -109,14 +131,15 @@ document.addEventListener('DOMContentLoaded', function() {
             doc.save('lista_produtos.pdf');
         });
     }
-
+    
     btnGerarPDF.addEventListener('click', gerarPDF);
-
+    
     if (btnVoltar) {
         btnVoltar.addEventListener('click', function() {
             window.history.back();
         });
     }
-
+    
     exibirTodosProdutos();
+    
 });
