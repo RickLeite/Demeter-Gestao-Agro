@@ -2,8 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const tabelaCorpo = document.querySelector('tbody');
     const inputPesquisa = document.querySelector('#inputPesquisa');
     const btnPesquisar = document.querySelector('#btnPesquisar');
-    const btnGerarCSV = document.querySelector('#btnGerarCSV');
     const btnGerarPDF = document.querySelector('#btnGerarPDF');
+    const btnGerarExcel = document.querySelector('#btnGerarExcel');
 
     function obterTodasAsVendas() {
         return fetch('http://localhost:3000/vendas/todas')
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
         linha.innerHTML = `
             <td>${venda.cnpj}</td>
             <td>${venda.nomeCliente}</td>
-            <td>${venda.quantidade}</td>
+            <td>${venda.produtos.reduce((total, produto) => total + produto.quantidade, 0)}</td>
             <td>${Number(venda.valorTotal).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
             <td>${venda.saleDate}</td>
             <td>
@@ -75,10 +75,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    btnGerarCSV.addEventListener('click', function () {
-        obterTodasAsVendas().then(vendas => gerarCSV(vendas));
-    });
-
     btnGerarPDF.addEventListener('click', function () {
         obterTodasAsVendas().then(vendas => gerarPDF(vendas));
     });
@@ -87,38 +83,32 @@ document.addEventListener('DOMContentLoaded', function () {
         obterTodasAsVendas().then(vendas => gerarExcel(vendas));
     });
 
-    function gerarCSV(vendas) {
-        const linhas = vendas.map(venda => Object.values(venda).join(','));
-
-        const csvContent = 'data:text/csv;charset=utf-8,' + linhas.join('\n');
-
-        const encodedUri = encodeURI(csvContent);
-        const link = document.createElement('a');
-        link.setAttribute('href', encodedUri);
-        link.setAttribute('download', 'relatorio.csv');
-        document.body.appendChild(link); // Required for Firefox
-        link.click();
-    }
-
     function gerarPDF(vendas) {
-        const doc = new jsPDF();
+        const docDefinition = {
+            content: [
+                { text: 'Relatório de Vendas', style: 'header' },
+                {
+                    table: {
+                        headers: ['CNPJ', 'Nome Cliente', 'Quantidade', 'Valor Total', 'Data da Venda'],
+                        body: vendas.map(venda => [
+                            venda.cnpj,
+                            venda.nomeCliente,
+                            venda.produtos.reduce((total, produto) => total + produto.quantidade, 0),
+                            Number(venda.valorTotal).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+                            venda.saleDate
+                        ])
+                    }
+                }
+            ],
+            styles: {
+                header: {
+                    fontSize: 18,
+                    bold: true
+                }
+            }
+        };
 
-        const header = ['CNPJ', 'Nome Cliente', 'Quantidade', 'Valor Total', 'Data da Venda'];
-
-        const linhas = vendas.map(venda => [
-            venda.cnpj,
-            venda.nomeCliente,
-            venda.quantidade,
-            Number(venda.valorTotal).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
-            venda.saleDate
-        ]);
-
-        doc.autoTable({
-            head: [header],
-            body: linhas
-        });
-
-        doc.save('relatorio.pdf');
+        pdfmake.createPdf(docDefinition).download('relatorio.pdf');
     }
 
     function gerarExcel(vendas) {
@@ -128,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const vendaData = [
                 venda.cnpj,
                 venda.nomeCliente,
-                venda.quantidade,
+                venda.produtos.reduce((total, produto) => total + produto.quantidade, 0),
                 Number(venda.valorTotal).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
                 venda.saleDate
             ];

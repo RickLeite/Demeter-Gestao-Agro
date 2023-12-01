@@ -23,8 +23,4 @@ public class VendaService {
     public List<Venda> obterTodasAsVendas() {
         return vendaRepository.findAll();
     }
-
-    public boolean existeVendaComId(String vendaId) {
-        return vendaRepository.existsById(vendaId);
-    }
 }

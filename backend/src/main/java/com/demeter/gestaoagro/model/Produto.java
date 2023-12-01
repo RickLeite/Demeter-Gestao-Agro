@@ -9,5 +9,4 @@ public class Produto {
     private String nomeProduto;
     private int quantidade;
     private double valorUnitario;
-
 }

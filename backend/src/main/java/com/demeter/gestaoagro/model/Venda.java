@@ -18,5 +18,4 @@ public class Venda {
     private String saleDate;
     private List<Produto> produtos;
     private double valorTotal;
-    
 }
