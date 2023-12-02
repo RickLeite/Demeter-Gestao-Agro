@@ -18,8 +18,10 @@
     <section class="container">
         <div class="header">
             <h2>Lista de Produtos</h2>
-            <input type="text" placeholder="Insira o nome do produto">
-            <button id="btnBuscar">🔍</button>
+            <div> <!-- Novo container para o campo de busca e botão -->
+                <input type="text" placeholder="Insira o nome do produto">
+                <button id="btnBuscar">🔍</button>
+            </div>
         </div>
         <table>
             <thead>
@@ -37,8 +39,8 @@
         </table>
     </section>
     <section id="gerarRelatorios" class="gerarRelatorios">
-        <button id="btnGerarCSV">Gerar Relatório em .CSV</button>
         <button id="btnGerarPDF">Gerar Relatório em PDF</button>
+        <button id="btnGerarCSV">Gerar Relatório em .CSV</button>
     </section>
 </div>
 <footer>

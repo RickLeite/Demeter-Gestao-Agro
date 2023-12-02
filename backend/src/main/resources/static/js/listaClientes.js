@@ -82,32 +82,61 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     buscarClientes(); // Chama a função para buscar e exibir os clientes
-
+    
     btnGerarPDF.addEventListener('click', function() {
         const doc = new jsPDF();
     
-        // Criando um array com os cabeçalhos das colunas exceto 'Ação'
-        let headers = Array.from(document.querySelectorAll("#tabelaClientes thead tr th"))
-                           .map(th => th.textContent)
-                           .slice(0, -1); // Exclui o último cabeçalho 'Ação'
+        // Definindo a cor de fundo para o cabeçalho como verde grama
+        const greenGrassColor = [0, 155, 72]; // Cor verde grama
+    
+        // Criando um array com os cabeçalhos das colunas
+        const headers = [['ID', 'Nome do Cliente', 'Data Nascimento', 'CPF', 'Nome da Empresa', 'CNPJ']];
     
         // Criando um array com os dados das linhas
         let data = Array.from(document.querySelectorAll("#tabelaClientes tbody tr")).map(tr => {
             return Array.from(tr.querySelectorAll("td"))
                         .slice(0, -1) // Exclui a última coluna (Ação) de cada linha
-                        .map(td => td.textContent);
+                        .map(td => td.textContent.trim());
         });
     
         // Usando autoTable para gerar o PDF
         doc.autoTable({
-            head: [headers],
-            body: data
+            head: headers,
+            body: data,
+            theme: 'plain', // Removendo o efeito de grade da tabela
+            headStyles: {
+                fillColor: greenGrassColor, // Cor de fundo verde grama
+                textColor: [0, 0, 0], // Cor do texto preta
+                halign: 'center', // Centraliza horizontalmente
+                valign: 'middle', // Centraliza verticalmente
+                fontStyle: 'bold', // Texto em negrito
+                fontSize: 10 // Diminui a fonte para se ajustar ao espaço disponível
+            },
+            styles: {
+                cellWidth: 'wrap' // Ajusta a largura da célula para o conteúdo
+            },
+            columnStyles: {
+                0: {cellWidth: 'auto'}, // ID
+                1: {cellWidth: 'auto'}, // Nome do Cliente
+                2: {cellWidth: 'auto'}, // Data Nascimento
+                3: {cellWidth: 'auto'}, // CPF
+                4: {cellWidth: 'auto'}, // Nome da Empresa
+                5: {cellWidth: 'auto'}  // CNPJ
+            },
+            margin: { top: 30 },
+            startY: 30 // Ajusta o início da tabela para não sobrepor o título
         });
     
+        // Adicionando o título do relatório na página
+        doc.setFontSize(18);
+        doc.setTextColor(40);
+        doc.text('Relatório de Clientes', 14, 20);
+    
+        // Salva o PDF
         doc.save('lista-clientes.pdf');
     });
     
-
+    
     btnGerarExcel.addEventListener('click', function() {
         let csvContent = "data:text/csv;charset=utf-8,";
         const rows = document.querySelectorAll("#tabelaClientes tr");

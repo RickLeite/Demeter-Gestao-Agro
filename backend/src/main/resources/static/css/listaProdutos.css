@@ -47,17 +47,23 @@ header {
     margin: 20px;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Sutil sombra */}
-
 .header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px; /* Definindo o espaço entre os elementos */
-    margin-bottom: 20px;
+    justify-content: space-between; /* Isso alinha o título à esquerda e o campo de busca à direita */
+    align-items: center; /* Isso centraliza verticalmente o título e o campo de busca */
+    padding-bottom: 10px; /* Espaço abaixo do cabeçalho */
 }
 
-
-
+.header input[type="text"], .header #btnBuscar {
+    margin: 0;
+    
+}
+    
+.header #btnBuscar {
+    flex: 0 0 auto; /* O botão só vai ocupar o espaço do seu conteúdo */
+}
+    
+    
 h1 {
     color: #ffffff;
 }

@@ -47,15 +47,24 @@ header {
     margin: 20px;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Sutil sombra */}
-
 .header {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Mantém o título à esquerda e os elementos de busca à direita */
     align-items: center;
-    gap: 15px; /* Definindo o espaço entre os elementos */
-    margin-bottom: 20px;
+    padding-bottom: 10px;
 }
-
+    
+    /* Adiciona uma nova classe para o contêiner do campo de busca e do botão */
+.search-container {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+    
+    /* Ajusta os estilos do campo de busca e do botão */
+    .header input[type="text"], .header #btnPesquisar {
+        margin-right: 5px; /* Espaço entre o campo de busca e o botão */
+    }
 
 
 h1 {
