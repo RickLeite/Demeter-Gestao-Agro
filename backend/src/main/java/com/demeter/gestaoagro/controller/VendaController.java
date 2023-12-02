@@ -9,6 +9,7 @@ import com.demeter.gestaoagro.service.VendaService;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(origins = "http://127.0.0.1:3000")
 @RestController
 @RequestMapping("/vendas")
 public class VendaController {

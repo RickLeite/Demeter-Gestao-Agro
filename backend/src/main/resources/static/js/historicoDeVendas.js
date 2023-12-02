@@ -7,15 +7,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function obterTodasAsVendas() {
         return fetch('http://localhost:3000/vendas/todas')
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao obter as vendas.');
+                }
+                return response.json();
+            })
             .then(vendas => {
                 exibirVendasNaTabela(vendas);
             })
-            .catch(error => console.error('Erro ao obter as vendas:', error));
+            .catch(error => console.error('Erro ao obter as vendas:', error.message));
     }
 
     function exibirVendasNaTabela(vendas) {
         tabelaCorpo.innerHTML = '';
+        // Ordenar as vendas pela data de forma descendente
+        vendas.sort((a, b) => new Date(b.saleDate) - new Date(a.saleDate));
+
         vendas.forEach(venda => {
             const linha = criarLinhaVenda(venda);
             tabelaCorpo.appendChild(linha);
@@ -29,20 +37,10 @@ document.addEventListener('DOMContentLoaded', function () {
             <td>${venda.nomeCliente}</td>
             <td>${venda.codigoVenda}</td>
             <td>${venda.produtos.reduce((total, produto) => total + produto.quantidade, 0)}</td>
-            <td>${Number(venda.valorTotal).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-            <td>${Number(venda.produtos[0]?.valorUnitario || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+            <td>${venda.valorTotal.toFixed(2)}</td>
+            <td>${(venda.produtos[0]?.valorUnitario || 0).toFixed(2)}</td>
             <td>${venda.saleDate}</td>
-            <td>
-                <button class="btn-delete" data-id="${venda.id}">
-                    <i class="fas fa-trash-alt"></i> Excluir
-                </button>
-            </td>
         `;
-    
-        linha.querySelector('.btn-delete').addEventListener('click', function () {
-            const vendaId = venda.id;
-            excluirVenda(vendaId);
-        });
     
         return linha;
     }
@@ -53,19 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(vendas => {
                 exibirVendasNaTabela(vendas);
             })
-            .catch(error => console.error('Erro ao obter as vendas por CNPJ:', error));
-    }
-
-    function excluirVenda(vendaId) {
-        fetch(`http://localhost:3000/vendas/excluir/${vendaId}`, {
-            method: 'DELETE',
-        })
-            .then(response => response.json())
-            .then(result => {
-                console.log('Venda excluída com sucesso:', result);
-                obterTodasAsVendas();
-            })
-            .catch(error => console.error('Erro ao excluir a venda:', error));
+            .catch(error => console.error('Erro ao obter as vendas por CNPJ:', error.message));
     }
 
     btnPesquisar.addEventListener('click', function () {
@@ -97,8 +83,8 @@ document.addEventListener('DOMContentLoaded', function () {
                             venda.nomeCliente,
                             venda.codigoVenda,
                             venda.produtos.reduce((total, produto) => total + produto.quantidade, 0),
-                            Number(venda.valorTotal).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
-                            Number(venda.produtos[0]?.valorUnitario || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+                            venda.valorTotal.toFixed(2),
+                            (venda.produtos[0]?.valorUnitario || 0).toFixed(2),
                             venda.saleDate
                         ])
                     }
@@ -124,8 +110,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 venda.nomeCliente,
                 venda.codigoVenda,
                 venda.produtos.reduce((total, produto) => total + produto.quantidade, 0),
-                Number(venda.valorTotal).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
-                Number(venda.produtos[0]?.valorUnitario || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+                venda.valorTotal.toFixed(2),
+                (venda.produtos[0]?.valorUnitario || 0).toFixed(2),
                 venda.saleDate
             ];
 
