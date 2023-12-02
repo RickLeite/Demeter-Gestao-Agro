@@ -38,11 +38,16 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('click', event => {
         if (event.target.classList.contains('btn-delete')) {
             const idProduto = event.target.closest('tr').querySelector('td').textContent;
-            fetch(`/produtos/${idProduto}`, { method: 'DELETE' })
-                .then(response => {
-                    if (response.ok) exibirTodosProdutos();
-                    else alert('Erro ao excluir o produto');
-                });
+            if (confirm('Demeter: Tem certeza que deseja excluir o produto?')) {
+                fetch(`/produtos/${idProduto}`, { method: 'DELETE' })
+                    .then(response => {
+                        if (response.ok) {
+                            exibirTodosProdutos();
+                        } else {
+                            alert('Erro ao excluir o produto');
+                        }
+                    });
+            }
         }
     });
 
@@ -77,10 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
         buscarProdutos().then(produtos => {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-    
-            // Definindo a cor de fundo para o cabeçalho como verde grama
-            const greenGrassColor = [0, 155, 72]; // Cor verde grama
-    
+            const greenGrassColor = [0, 155, 72]; 
             const headers = [['ID', 'Nome do Produto', 'Quantidade', 'Valor Unitário', 'Valor Total']];
             const data = produtos.map(produto => [
                 produto.id,
@@ -89,43 +91,38 @@ document.addEventListener('DOMContentLoaded', function() {
                 `R$ ${produto.preco.toFixed(2)}`,
                 `R$ ${(produto.preco * produto.quantidade).toFixed(2)}`
             ]);
-    
             doc.autoTable({
                 head: headers,
                 body: data,
-                theme: 'plain', // Usa um tema simples sem grades
+                theme: 'plain',
                 headStyles: {
-                    fillColor: greenGrassColor, // Define a cor de fundo para as células do cabeçalho
-                    textColor: [0, 0, 0], // Define a cor do texto para preto
-                    halign: 'center', // Centraliza horizontalmente
-                    valign: 'middle', // Centraliza verticalmente
-                    fontStyle: 'bold', // Texto em negrito
-                    fontSize: 10 // Diminui a fonte para se ajustar ao espaço disponível
+                    fillColor: greenGrassColor,
+                    textColor: [0, 0, 0],
+                    halign: 'center',
+                    valign: 'middle',
+                    fontStyle: 'bold',
+                    fontSize: 10
                 },
                 styles: {
-                    cellWidth: 'wrap' // Ajusta a largura da célula para o conteúdo
+                    cellWidth: 'wrap'
                 },
                 columnStyles: {
-                    0: {cellWidth: 'auto'}, // ID
-                    1: {cellWidth: 'auto'}, // Nome do Produto
-                    2: {cellWidth: 'auto'}, // Quantidade
-                    3: {cellWidth: 'auto'}, // Valor Unitário
-                    4: {cellWidth: 'auto'}  // Valor Total
+                    0: {cellWidth: 'auto'},
+                    1: {cellWidth: 'auto'},
+                    2: {cellWidth: 'auto'},
+                    3: {cellWidth: 'auto'},
+                    4: {cellWidth: 'auto'}
                 },
                 margin: { top: 20 },
-                startY: 30, // Posição vertical inicial da tabela
+                startY: 30,
                 didDrawPage: data => {
-                    // Adicionando o título do relatório na página
                     doc.setFontSize(18);
                     doc.setTextColor(40);
                     doc.text('Relatório de Produtos', data.settings.margin.left, 20);
                 },
                 didDrawCell: data => {
-                    // Não há necessidade de preencher novamente as células do cabeçalho, isso já é tratado pelo headStyles
                 },
             });
-    
-            // Salva o PDF
             doc.save('lista-produtos.pdf');
         });
     };
