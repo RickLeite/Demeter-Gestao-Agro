@@ -1,11 +1,10 @@
-
 body, h1, h2, p, ul, li {
     margin: 0;
     padding: 0;
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -15,14 +14,14 @@ body {
 }
 
 header {
-    background-color: #2E7D32;
+    background-color: #4CAF50;
     color: #fff;
     text-align: center;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    padding: 9px; /* Adicione mais preenchimento para aumentar o tamanho */
-    margin-bottom: -70px; /* Aumente a margem inferior para separá-lo do conteúdo do corpo */
+    padding: 9px;
+    margin-bottom: -50px;
 }
 
 header h1 {
@@ -30,9 +29,19 @@ header h1 {
     margin-bottom: 10px;
 }
 
+/* Estilos de navegação */
+nav {
+    background-color: #4CAF50;
+    padding: 10px 0;
+}
 
-nav ul li {
-    display: inline;
+nav ul {
+    list-style: none;
+    text-align: center;
+}
+
+nav li {
+    display: inline-block;
     margin-right: 20px;
 }
 
@@ -40,25 +49,27 @@ nav a {
     text-decoration: none;
     color: #fff;
     font-weight: bold;
-    transition: color 0.3s;
+    font-size: 18px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 nav a:hover {
-    color: #5cb85c;
+    background-color: #45a049;
+    color: #fff;
 }
 
-/* Estilos de login */
 .login-container {
     display: flex;
-    margin: 85px auto; /* Alterei a margem para centralizar verticalmente e reduzi a margem superior */
-    max-width: 800px; /* Defini uma largura máxima para o quadro de login */
+    margin: 75px auto;
+    max-width: 1000px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     overflow: hidden;
     margin-bottom: 10px;
-    background-color: rgba(255, 255, 255, 0.8); /* Cor de fundo semitransparente */
+    background-color: rgba(255, 255, 255, 0.8);
 }
-
 
 .login-image {
     flex: 1;
@@ -70,12 +81,15 @@ nav a:hover {
     height: 100%;
     object-fit: cover;
     display: block;
+    border-radius: 10px 0 0 10px;
 }
 
 .login-box {
     flex: 1;
     background-color: rgba(255, 255, 255, 0.8);
     padding: 30px;
+    border-radius: 0 10px 10px 0;
+    height: 300px;
 }
 
 .login-box h2 {
@@ -108,7 +122,7 @@ nav a:hover {
 /* Estilos auxiliares */
 .forgot-password, .register-prompt {
     text-align: center;
-    margin: 10px 0 20px; 
+    margin: 10px 0 20px;
 }
 
 .forgot-password a, .register-prompt a {
@@ -119,6 +133,7 @@ nav a:hover {
 .forgot-password a:hover, .register-prompt a:hover {
     text-decoration: underline;
 }
+
 .login-box input,
 .login-box button {
     width: 100%;
@@ -126,8 +141,9 @@ nav a:hover {
     margin: 10px 0;
     border: none;
     border-radius: 5px;
-    box-sizing: border-box; /* Garante que a largura inclua preenchimento e borda */
+    box-sizing: border-box;
 }
+
 body {
     display: flex;
     flex-direction: column;
@@ -140,7 +156,7 @@ body {
 
 footer {
     text-align: center;
-    background-color: #2E7D32;
+    background-color: #4CAF50;
     color: #fff;
     margin-top: 20px;
     padding: 19px 0;

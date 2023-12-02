@@ -21,11 +21,10 @@
 
     <div class="login-container">
         <div class="login-image">
-            <img th:src="@{img/agro.jpg}" alt="Imagem de Exemplo">
+            <img th:src="@{img/logo2.jpg}" alt="Imagem de Exemplo">
         </div>
         <div class="login-box">
             <h2>Cadastro</h2>
-            <!-- Certifique-se de que o método seja POST -->
             <form action="/registro/cadastrar" method="post">
                 <label for="nome">Nome:</label>
                 <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
