@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnPesquisar = document.querySelector('#btnPesquisar');
     const btnGerarPDF = document.querySelector('#btnGerarPDF');
     const btnGerarExcel = document.querySelector('#btnGerarExcel');
+    const voltarButton = document.getElementById("voltar");
 
     function obterTodasAsVendas() {
         return fetch('http://localhost:3000/vendas/todas')

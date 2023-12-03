@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const inputPesquisa = document.querySelector('#inputPesquisa');
     const btnGerarPDF = document.querySelector('#btnGerarPDF');
     const btnGerarExcel = document.querySelector('#btnGerarExcel');
+    const voltarButton = document.getElementById("voltar");
 
     if (!tabelaCorpo || !btnPesquisar || !inputPesquisa || !btnGerarPDF || !btnGerarExcel) {
         console.error('Um ou mais elementos necessários não foram encontrados no DOM.');
@@ -173,6 +174,9 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+    });
+    document.getElementById('voltar').addEventListener('click', function() {
+        window.history.back();
     });
     
 
