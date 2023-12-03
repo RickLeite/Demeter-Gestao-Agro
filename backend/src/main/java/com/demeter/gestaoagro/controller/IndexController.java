@@ -1,5 +1,6 @@
 package com.demeter.gestaoagro.controller;
-
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -75,17 +76,37 @@ public class IndexController {
     public String login() {
         return "login";
     }
-    
+
     @GetMapping("/perfil.html")
     public String perfil() {
-        return "perfil"; // O nome 'perfil' deve corresponder ao nome do seu arquivo HTML sem a extensão .html
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            return "perfil"; // O nome 'perfil' deve corresponder ao nome do seu arquivo HTML sem a extensão .html
+        } else {
+            return "redirect:/login";
+        }
     }
 
     @GetMapping("/perfil")
     public String perfil1() {
-        return "perfil"; // O nome 'perfil' deve corresponder ao nome do seu arquivo HTML sem a extensão .html
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            return "perfil"; // O nome 'perfil' deve corresponder ao nome do seu arquivo HTML sem a extensão .html
+        } else {
+            return "redirect:/login";
+        }
     }
-    
+
+    // Adicione esta rota para lidar com o redirecionamento após clicar no botão "Voltar" na página de estoque
+    @GetMapping("/voltar-para-perfil")
+    public String voltarParaPerfil() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            return "perfil"; // O nome 'perfil' deve corresponder ao nome do seu arquivo HTML sem a extensão .html
+        } else {
+            return "redirect:/login";
+        }
+    }
 
     @GetMapping("/ws")
     public String ws() {

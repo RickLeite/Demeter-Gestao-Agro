@@ -64,6 +64,11 @@ document.addEventListener("DOMContentLoaded", function () {
         redirectToPage('/cadastro-feedback');
     });
 
+    document.querySelector('.exit-button').addEventListener('click', function () {
+        redirectToPage('/login');
+    });
+    
+
     function redirectToPage(url) {
         window.location.href = url;
     }

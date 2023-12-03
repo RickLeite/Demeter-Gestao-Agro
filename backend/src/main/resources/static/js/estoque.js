@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const formCadastro = document.getElementById("form-cadastro");
     const listaProdutos = document.getElementById("lista-produtos");
+    const voltarButton = document.getElementById("voltar");
 
     formCadastro.addEventListener("submit", function (e) {
         e.preventDefault();
@@ -72,4 +73,8 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .catch(error => console.error('Erro ao remover último produto:', error));
     }
+
+    voltarButton.addEventListener("click", function () {
+        window.location.href = "/perfil.html";
+    });
 });
