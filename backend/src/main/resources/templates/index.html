@@ -18,7 +18,6 @@
         <ul>
             <li><a href="#sobre">Sobre Nós</a></li>
             <li><a href="#produtos">Produtos</a></li>
-            <!-- Adjust the Thymeleaf syntax for links -->
             <li><a th:href="@{/registro}">Cadastro</a></li>
             <li><a th:href="@{/login}">Login</a></li>
         </ul>
@@ -37,23 +36,15 @@
     <section id="sobre">
         <div id="sobre-nos">
             <div class="sobre-nos-container">
-                <div class="imagem-container">
-                    <!-- Use Thymeleaf syntax for image source -->
-                    <img th:src="@{/img/agro.jpg}" alt="Imagem de Login" />
-                </div>
                 <div class="texto-container">
-                    <h2>Sobre nós</h2>
-                    <p>Texto descrevendo sobre a empresa ou sobre o site...</p>
-                    <div class="contact-container">
-                        <div class="contact-item">
-                            <!-- Adjust the image source and Thymeleaf syntax -->
-                            <img th:src="@{/img/iconiEmail.png}" alt="Ícone de E-mail" />
-                            <span>E-MAIL</span>
-                            <p>Tem alguma dúvida?</p>
-                            <a href="mailto:demeter@gmail.com">demeter@gmail.com</a>
-                        </div>
-                        <!-- Repeat similar adjustments for other contact items -->
-                    </div>
+                    <h2>Sobre Deméter</h2>
+                    <p>
+                        Deméter é dedicada a fornecer soluções inovadoras para a agricultura,
+                        promovendo o crescimento sustentável e a eficiência nos processos agrícolas.
+                    </p>
+                </div>
+                <div class="imagem-container">
+                    <img th:src="@{/img/logoD.jpg}" alt="Imagem de Agricultura" />
                 </div>
             </div>
         </div>
@@ -63,24 +54,71 @@
         <h2>Nossos Produtos</h2>
         <div class="produtos-container">
             <div class="produto-item">
-                <h3>Controle De Estoque</h3>
-                <!-- Use Thymeleaf syntax for image source -->
-                <img th:src="@{/img/controleEstoque.jpg}" alt="controle estoque" />
-                <!-- Adjust the link using Thymeleaf syntax -->
-                <a th:href="@{/nossos-produtos}">Saiba mais</a>
+                <div class="produto-info">
+                    <h3>Controle De Estoque</h3>
+                    <p>Gerencie eficientemente o estoque da sua fazenda com nossa solução avançada.</p>
+                    <a th:href="@{/nossos-produtos}">Saiba mais</a>
+                </div>
+            </div>
+            <div class="produto-item">
+                <div class="produto-info">
+                    <h3>Controle Financeiro</h3>
+                    <p>Acompanhamento de despesas e lucros. Disponibiliza relatórios personalizados para ajudar na tomada de decisão.</p>
+                    <a th:href="@{/nossos-produtos}">Saiba mais</a>
+                </div>
             </div>
 
-            <!-- Repeat similar adjustments for other produto-items -->
+            <!-- Adicione mais produtos aqui -->
+
+            <div class="produto-item">
+                <div class="produto-info">
+                    <h3>Dashboard</h3>
+                    <p>Um sistema de Dashboard para facil visualização.</p>
+                    <a th:href="@{/nossos-produtos}">Saiba mais</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="contato">
+        <h2>Contato</h2>
+        <div class="contato-container">
+            <div class="info-contato">
+                <h3>Email</h3>
+                <p>Tem alguma dúvida? Entre em contato conosco por e-mail.</p>
+                <a href="mailto:contato@demeter.com">contato@demeter.com</a>
+            </div>
+            <div class="info-contato">
+                <h3>Telefone</h3>
+                <p>Entre em contato conosco por telefone durante o horário comercial.</p>
+                <p>(19) 99555-5280</p>
+            </div>
+            <div class="info-contato">
+                <h3>Chat</h3>
+                <p>
+                    Precisa de ajuda instantânea? Utilize nosso chat online para suporte em tempo real.
+                </p>
+                <button onclick="openChat()">Iniciar Chat</button>
+            </div>
+        </div>
+    </section>
+    <section id="comentarios">
+        <h2>Comentários dos Usuários</h2>
+        <div class="comentarios-container" id="area-comentarios">
+            <div class="comentario-box">
+                <div class="comentario-header">
+                    <img src="https://placekitten.com/40/40" alt="Imagem do Usuário" />
+                    <span>Nome do Usuário</span>
+                </div>
+                <p class="comentario-texto">
+                    TEXTO PARA COLOCAR O COMENTARIO
+                </p>
+            </div>
+
+            <!-- Adicione mais comentários aqui -->
 
         </div>
     </section>
-
-    <section id="comentarios">
-        <h2>Comentários dos Usuários</h2>
-        <div class="comentarios-container" id="area-comentarios"></div>
-    </section>
 </div>
-
 <footer>
     <p>&copy; 2023 Deméter</p>
 </footer>
@@ -100,7 +138,7 @@
 </div>
 <script th:src="@{/js/script.js}"></script>
 <script>
-    // Your existing script for WebSocket and chat functionality
+    // Seu script existente para WebSocket e funcionalidade de chat
 </script>
 </body>
 

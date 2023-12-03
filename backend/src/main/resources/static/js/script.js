@@ -89,13 +89,6 @@ function closeChat() {
     document.getElementById('chatbot-container').style.display = 'none';
 }
 
-// Other functions remain the same...
-
-const comentarios = [
-    { nome: 'Nome do Usuário', texto: 'Este é um comentário de exemplo. A plataforma é excelente!' },
-    { nome: 'Outro Usuário', texto: 'Estou muito satisfeito com os produtos oferecidos!' }
-];
-
 function exibirComentarios() {
     const areaComentarios = document.getElementById('area-comentarios');
 
