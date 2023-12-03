@@ -10,27 +10,25 @@
 </head>
 
 <body>
-<header>
-    <button id="btn-voltar" class="btn-voltar">
-        <i class="fas fa-arrow-left"></i> Voltar</button>
-    <h1>Feedback</h1>
-</header>
-<section>
+    <header>
+        <button id="btn-voltar" class="btn-voltar">
+            <i class="fas fa-arrow-left"></i> Voltar</button>
+        <h1>Feedback</h1>
+    </header>
+    <section>
+        <!-- Seção de Avaliação -->
+        <section id="secao-avaliacao">
+            <h2>Avalie o nosso serviço</h2>
+            <p>Por favor, nos diga o que você acha do nosso serviço. Sua opinião é muito importante para nós!</p>
+            <textarea name="avaliacao" id="avaliacao" rows="4" placeholder="Digite sua avaliação aqui..."></textarea>
+            <button type="button" id="btnEnviarAvaliacao" onclick="salvarAvaliacao()">Enviar Avaliação</button>
+        </section>
+    </section>
 
-</section>
-
-<!-- Seção de Avaliação -->
-<section id="secao-avaliacao">
-    <h2>Avalie o nosso serviço</h2>
-    <p>Por favor, nos diga o que você acha do nosso serviço. Sua opinião é muito importante para nós!</p>
-    <textarea name="avaliacao" id="avaliacao" rows="4" placeholder="Digite sua avaliação aqui..."></textarea>
-    <button type="button" id="btnEnviarAvaliacao" th:onclick="salvarAvaliacao()">Enviar Avaliação</button>
-</section>
-
-<footer>
-    <p>&copy; 2023 Deméter</p>
-</footer>
-<script th:src="@{/js/cadastroFeedback.js}"></script>
+    <footer>
+        <p>&copy; 2023 Deméter</p>
+    </footer>
+    <script th:src="@{/js/cadastroFeedback.js}"></script>
 </body>
 
 </html>
