@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const graficoCanvas = document.getElementById("grafico");
+    const voltarButton = document.getElementById("voltar");
 
     fetch("http://localhost:3000/estoque/all")
         .then(response => response.json())
@@ -49,6 +50,9 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => {
             console.error('Error fetching data:', error);
+        });
+        document.getElementById('voltar').addEventListener('click', function() {
+            window.history.back();
         });
 });
 

@@ -49,3 +49,27 @@ footer {
     padding: 3px 0;
     box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.1);
 }
+.btn-voltar {
+    background-color: transparent;
+    border: none;
+    color: #fff; /* Mudança para branco para ser visível no fundo verde */
+    position: absolute; /* Adicionado para posicionar o botão no canto superior esquerdo */
+    top: 15px; /* Ajuste conforme necessário */
+    left: 15px; /* Ajuste conforme necessário */
+    font-size: 16px;
+}
+
+.btn-voltar i {
+    margin-right: 5px;
+}
+
+.btn-voltar:hover {
+    color: #aaa; /* Mudança para um tom de cinza quando o mouse estiver sobre ele */
+}
+.btn-voltar:hover {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    text-decoration: none;
+}
