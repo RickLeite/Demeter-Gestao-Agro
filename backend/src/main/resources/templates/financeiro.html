@@ -18,7 +18,7 @@
         <section class="containerdespesa-section">
             <div class="registro-despesa">
                 <h2>Registro de Despesas</h2>
-                <form id="form-despesa" th:action="@{/registrar-despesa}" method="post">
+                <form id="form-despesa" th:action="@{/registrar-despesa}" method="post" enctype="multipart/form-data">
                     <label for="data-despesa">Data da Despesa:</label>
                     <input type="date" id="data-despesa" name="dataDespesa" required>
                     <label for="valor-despesa">Valor (R$):</label>
@@ -32,7 +32,9 @@
                     </div>
                     <label class="anexo-label">Anexar Documento:</label>
                     <input type="file" id="anexo-despesa" name="anexoDespesa" accept=".pdf, .doc, .docx">
-                    <div class="botoes-acao"> <!-- Div adicional para envolver os botões -->
+                    <!-- Adicione o campo oculto para o nome do arquivo aqui -->
+                    <input type="hidden" id="nome-do-arquivo" name="nomeDoArquivo">
+                    <div class="botoes-acao">
                         <button type="submit" id="botao-cadastrar-despesa">Cadastrar Despesa</button>
                         <button id="btn-ver-detalhes" th:onclick="verDetalhes()">Ver Detalhes</button>
                     </div>

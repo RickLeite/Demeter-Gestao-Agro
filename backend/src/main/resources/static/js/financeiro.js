@@ -1,8 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const formDespesa = document.getElementById("form-despesa");
-    let pago = false; // Estado inicial para 'pago'
+    let pago = false;
 
-    // Adicionando listeners para os botões de pagamento
     document.getElementById('btn-nao-pago').addEventListener('click', function() {
         pago = false;
     });
@@ -14,18 +13,19 @@ document.addEventListener('DOMContentLoaded', function() {
     formDespesa.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        // Criação de um FormData para incluir arquivos
         const formData = new FormData();
         formData.append('dataDespesa', document.getElementById('data-despesa').value);
         formData.append('valorDespesa', parseFloat(document.getElementById('valor-despesa').value));
         formData.append('descricaoDespesa', document.getElementById('descricao-despesa').value);
-        formData.append('pago', pago); // O estado de 'pago' já está definido pelos botões
+        formData.append('pago', pago);
 
-        // Anexar o arquivo, se selecionado
         const anexoInput = document.getElementById('anexo-despesa');
         if (anexoInput.files.length > 0) {
             formData.append('anexoDespesa', anexoInput.files[0]);
+            formData.append('nomeDoArquivo', anexoInput.files[0].name); // Adicione o nome do arquivo ao FormData
         }
+
+        console.log('Dados do formulário:', formData);
 
         fetch('/api/despesas/upload', {
             method: 'POST',
@@ -40,14 +40,21 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(data => {
             console.log('Despesa adicionada:', data);
+            resetForm(); // Chama a função para limpar o formulário
         })
         .catch((error) => {
             console.error('Erro:', error);
         });
     });
 
-    // Listener para o botão 'voltar'
     document.getElementById('voltar').addEventListener('click', function() {
         window.history.back();
     });
+
+    function resetForm() {
+        // Reseta os campos do formulário
+        formDespesa.reset();
+        // Aqui você pode adicionar qualquer lógica adicional de limpeza, se necessário.
+        // Por exemplo, se você tiver algum componente de UI que precisa ser reiniciado manualmente, faça isso aqui.
+    }
 });
