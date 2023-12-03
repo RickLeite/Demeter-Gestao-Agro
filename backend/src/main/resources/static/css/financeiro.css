@@ -151,3 +151,40 @@ footer {
 .btn-voltar:hover {
     color: #aaa; /* Mudança para um tom de cinza quando o mouse estiver sobre ele */
 }
+
+/* Estilos para centralizar e alterar a cor dos botões de ação */
+.botoes-acao {
+    display: flex;
+    justify-content: center; /* Centraliza os botões */
+    gap: 10px; /* Adiciona um espaço entre os botões */
+}
+
+.botoes-acao button {
+    background-color: #2E7D32;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px 20px; /* Menor padding para botões menores */
+    font-size: 14px; /* Tamanho de fonte menor */
+    transition: background-color 0.3s;
+}
+
+.botoes-acao button:hover {
+    background-color: #228B22; /* Cor azul mais escura para o hover */
+}
+
+#btn-excluir-despesa {
+    background-color: #2E7D32;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#btn-excluir-despesa:hover {
+    background-color: #228B22;
+}
