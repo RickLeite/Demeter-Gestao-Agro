@@ -58,11 +58,6 @@ public class IndexController {
         return "listaProdutos";
     }
 
-    @GetMapping("/lucros-gastos")
-    public String lucrosGastos() {
-        return "lucrosGastos";
-    }
-
     @GetMapping("/nossos-produtos")
     public String nossosProdutos() {
         return "nossosProdutos";

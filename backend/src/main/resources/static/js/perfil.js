@@ -1,32 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const userImage = document.getElementById("user-image");
-    const imageUploadInput = document.getElementById("user-image-upload");
-
-    imageUploadInput.addEventListener("change", function () {
-        const file = this.files[0];
-        if (file) {
-            const formData = new FormData();
-            formData.append('fotoPerfil', file);
-
-            fetch('/registro/upload-imagem-perfil/seuIdDeUsuario', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Falha no upload');
-                }
-                return response.json();
-            })
-            .then(data => {
-                userImage.src = data.caminhoDaImagem;
-            })
-            .catch(error => {
-                console.error('Erro:', error);
-            });
-        }
-    });
-
     const nomeUsuario = localStorage.getItem('nomeUsuario');
     const emailUsuario = localStorage.getItem('emailUsuario');
 
@@ -65,16 +37,12 @@ document.addEventListener("DOMContentLoaded", function () {
         redirectToPage('/historico-vendas');
     });
 
-    document.getElementById('btnLucrosGastos').addEventListener('click', function () {
-        redirectToPage('/lucros-gastos');
+    document.getElementById('btnFeedback').addEventListener('click', function () {
+        redirectToPage('/cadastroFeedback');
     });
 
     document.querySelector('.exit-button').addEventListener('click', function () {
         redirectToPage('/index');
-    });
-
-    document.querySelector('.feedback-button').addEventListener('click', function () {
-        redirectToPage('/cadastroFeedback');
     });
 
     document.querySelector('.exit-button').addEventListener('click', function () {
