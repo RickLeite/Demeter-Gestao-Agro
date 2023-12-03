@@ -5,21 +5,34 @@ document.addEventListener("DOMContentLoaded", function () {
     imageUploadInput.addEventListener("change", function () {
         const file = this.files[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                userImage.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
+            const formData = new FormData();
+            formData.append('fotoPerfil', file);
+
+            fetch('/registro/upload-imagem-perfil/seuIdDeUsuario', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Falha no upload');
+                }
+                return response.json();
+            })
+            .then(data => {
+                userImage.src = data.caminhoDaImagem;
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+            });
         }
     });
-    
 
     const nomeUsuario = localStorage.getItem('nomeUsuario');
     const emailUsuario = localStorage.getItem('emailUsuario');
 
     if (nomeUsuario && emailUsuario) {
-        document.getElementById("nomeUsuario").textContent = "Nome: " + nomeUsuario;
-        document.getElementById("emailUsuario").textContent = "E-mail: " + emailUsuario;
+        document.getElementById("nomeUsuario").textContent = nomeUsuario;
+        document.getElementById("emailUsuario").textContent = emailUsuario;
     } else {
         console.log('Nome do usuário ou e-mail não definidos no localStorage');
     }
@@ -67,7 +80,6 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector('.exit-button').addEventListener('click', function () {
         redirectToPage('/login');
     });
-    
 
     function redirectToPage(url) {
         window.location.href = url;

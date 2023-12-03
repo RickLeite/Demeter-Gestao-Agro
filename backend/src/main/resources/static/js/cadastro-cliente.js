@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const formCadastro = document.getElementById('form-cliente');
     const nomeClienteInput = document.getElementById('nome-cliente');
+    const voltarButton = document.getElementById("voltar");
 
     nomeClienteInput.addEventListener('input', function() {
         this.value = this.value.replace(/\d+/g, '');

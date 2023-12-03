@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const voltarButton = document.getElementById("voltar");
 
     // Dados fictícios
     const data = [
