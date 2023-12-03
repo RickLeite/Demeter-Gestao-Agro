@@ -66,11 +66,6 @@ public class IndexController {
         return "nossosProdutos";
     }
 
-    @GetMapping("/perfil")
-    public String perfil() {
-        return "perfil";
-    }
-
     @GetMapping("/registro")
     public String registro() {
         return "registro";
@@ -80,6 +75,12 @@ public class IndexController {
     public String login() {
         return "login";
     }
+    
+    @GetMapping("/perfil")
+    public String perfil() {
+        return "perfil"; // O nome 'perfil' deve corresponder ao nome do seu arquivo HTML sem a extensão .html
+    }
+    
 
     @GetMapping("/ws")
     public String ws() {

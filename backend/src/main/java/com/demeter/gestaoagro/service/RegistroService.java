@@ -24,11 +24,9 @@ public class RegistroService {
 
     public Registro salvarRegistro(Registro registro) {
         log.info("Salvando registro: {}", registro);
-
         if (registro == null) {
             throw new IllegalArgumentException("O registro não pode ser nulo");
         }
-
         return registroRepository.save(registro);
     }
 
@@ -43,33 +41,21 @@ public class RegistroService {
     }
 
     public Registro atualizarRegistro(String id, Registro novoRegistro) {
-        try {
-            log.info("Atualizando registro com ID {}: {}", id, novoRegistro);
+        Registro registroExistente = registroRepository.findById(id)
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Registro não encontrado"));
 
-            Registro registroExistente = registroRepository.findById(id)
-                    .orElseThrow(() -> new RegistroNaoEncontradoException("Registro não encontrado"));
+        registroExistente.setNome(novoRegistro.getNome());
+        registroExistente.setEmail(novoRegistro.getEmail());
+        registroExistente.setSenha(novoRegistro.getSenha());
 
-            registroExistente.setNome(novoRegistro.getNome());
-            registroExistente.setEmail(novoRegistro.getEmail());
-            registroExistente.setSenha(novoRegistro.getSenha());
-
-            return registroRepository.save(registroExistente);
-        } catch (RegistroNaoEncontradoException e) {
-            throw new RegistroNaoPodeSerAtualizadoException("Não foi possível atualizar o registro: " + e.getMessage());
-        }
+        return registroRepository.save(registroExistente);
     }
 
     public void deletarRegistro(String id) {
-        try {
-            log.info("Deletando registro com ID: {}", id);
+        Registro registroExistente = registroRepository.findById(id)
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Registro não encontrado"));
 
-            Registro registroExistente = registroRepository.findById(id)
-                    .orElseThrow(() -> new RegistroNaoEncontradoException("Registro não encontrado"));
-
-            registroRepository.delete(registroExistente);
-        } catch (RegistroNaoEncontradoException e) {
-            throw new RegistroNaoPodeSerAtualizadoException("Erro ao deletar o registro informado: " + e.getMessage());
-        }
+        registroRepository.delete(registroExistente);
     }
 
     public Registro autenticarRegistro(String email, String senha) {

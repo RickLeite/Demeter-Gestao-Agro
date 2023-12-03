@@ -8,3 +8,5 @@ import java.util.Optional;
 public interface RegistroRepository extends MongoRepository<Registro, String> {
     Optional<Registro> findByEmailAndSenha(String email, String senha);
 }
+
+

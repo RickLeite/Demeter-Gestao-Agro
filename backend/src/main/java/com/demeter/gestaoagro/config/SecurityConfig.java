@@ -23,28 +23,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-            .inMemoryAuthentication()
-            .withUser("admin")
-            .password(passwordEncoder().encode("123"))
-            .roles("ADMIN");
+        auth.userDetailsService(userDetailsService)
+            .passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/perfil").hasRole("ADMIN")
+                .antMatchers("/css/**", "/js/**", "/img/**", "/webjars/**").permitAll() // Permitir recursos estáticos
+                .antMatchers("/perfil").authenticated()
                 .anyRequest().permitAll()
                 .and()
             .formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/perfil")
+                .loginPage("/login") // Página de login personalizada
+                .defaultSuccessUrl("/perfil", true) // Redirecionar para /perfil após o login bem-sucedido
                 .permitAll()
                 .and()
             .logout()
+                .logoutSuccessUrl("/") // Redirecionar para a página inicial após o logout
                 .permitAll()
-            .and()
+                .and()
             .csrf().disable();
     }
 
