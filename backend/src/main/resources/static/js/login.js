@@ -17,6 +17,10 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
+                // Aqui você armazena o nome e o e-mail no localStorage antes de redirecionar
+                localStorage.setItem('nomeUsuario', data.nome);
+                localStorage.setItem('emailUsuario', data.email);
+
                 // Redireciona para a URL definida pelo backend
                 window.location.href = data.redirect;
             } else {

@@ -48,20 +48,20 @@ public class RegistroController {
     }
 
     @PostMapping("/autenticar")
-    public ResponseEntity<?> autenticarRegistro(@RequestBody Registro dadosLogin) {
+public ResponseEntity<?> autenticarRegistro(@RequestBody Registro dadosLogin) {
     logger.info("Tentativa de autenticação para o email: {}", dadosLogin.getEmail());
     
     Registro registroAutenticado = registroService.autenticarRegistro(dadosLogin.getEmail(), dadosLogin.getSenha());
     if (registroAutenticado != null) {
-        // Altere a string de redirecionamento conforme necessário
-        String json = "{\"status\": \"success\", \"redirect\": \"/perfil.html\"}";
+        String json = String.format("{\"status\": \"success\", \"redirect\": \"/perfil.html\", \"nome\": \"%s\", \"email\": \"%s\"}", 
+                                    registroAutenticado.getNome(), registroAutenticado.getEmail());
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(json);
     } else {
-        // Tratamento de erro
         String json = "{\"status\": \"error\", \"message\": \"Usuário ou senha inválidos\"}";
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).contentType(MediaType.APPLICATION_JSON).body(json);
     }
 }
+
 
     @GetMapping("/listar")
     public String listarRegistros(Model model) {

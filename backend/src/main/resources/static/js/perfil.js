@@ -1,27 +1,28 @@
 document.addEventListener("DOMContentLoaded", function () {
-
     const userImage = document.getElementById("user-image");
     const imageUploadInput = document.getElementById("user-image-upload");
 
     imageUploadInput.addEventListener("change", function () {
         const file = this.files[0];
-
         if (file) {
             const reader = new FileReader();
-
             reader.onload = function (e) {
                 userImage.src = e.target.result;
             };
-
             reader.readAsDataURL(file);
         }
     });
+    
 
-    const nomeUsuario = "Theo";
-    const emailUsuario = "theoemail@example.com";
+    const nomeUsuario = localStorage.getItem('nomeUsuario');
+    const emailUsuario = localStorage.getItem('emailUsuario');
 
-    document.getElementById("nomeUsuario").textContent = "Nome: " + nomeUsuario;
-    document.getElementById("emailUsuario").textContent = "E-mail: " + emailUsuario;
+    if (nomeUsuario && emailUsuario) {
+        document.getElementById("nomeUsuario").textContent = "Nome: " + nomeUsuario;
+        document.getElementById("emailUsuario").textContent = "E-mail: " + emailUsuario;
+    } else {
+        console.log('Nome do usuário ou e-mail não definidos no localStorage');
+    }
 
     document.getElementById('btnEstoque').addEventListener('click', function () {
         redirectToPage('/estoque');
@@ -64,8 +65,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function redirectToPage(url) {
-        // Adicione aqui a lógica para redirecionar para a página desejada
         window.location.href = url;
     }
-
 });
