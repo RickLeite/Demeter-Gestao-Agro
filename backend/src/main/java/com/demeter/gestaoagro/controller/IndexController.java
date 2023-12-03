@@ -76,8 +76,13 @@ public class IndexController {
         return "login";
     }
     
-    @GetMapping("/perfil")
+    @GetMapping("/perfil.html")
     public String perfil() {
+        return "perfil"; // O nome 'perfil' deve corresponder ao nome do seu arquivo HTML sem a extensão .html
+    }
+
+    @GetMapping("/perfil")
+    public String perfil1() {
         return "perfil"; // O nome 'perfil' deve corresponder ao nome do seu arquivo HTML sem a extensão .html
     }
     
