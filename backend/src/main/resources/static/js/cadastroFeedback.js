@@ -1,5 +1,6 @@
 function salvarAvaliacao() {
     var avaliacao = document.getElementById('avaliacao').value;
+    const voltarButton = document.getElementById("voltar");
 
     if (avaliacao.trim() !== '') {
         var feedback = {

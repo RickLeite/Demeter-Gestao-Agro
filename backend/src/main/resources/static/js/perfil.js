@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     document.querySelector('.feedback-button').addEventListener('click', function () {
-        redirectToPage('/cadastro-feedback');
+        redirectToPage('/cadastroFeedback');
     });
 
     document.querySelector('.exit-button').addEventListener('click', function () {

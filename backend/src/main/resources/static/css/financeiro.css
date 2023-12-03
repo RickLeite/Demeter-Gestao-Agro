@@ -173,18 +173,3 @@ footer {
 .botoes-acao button:hover {
     background-color: #228B22; /* Cor azul mais escura para o hover */
 }
-
-#btn-excluir-despesa {
-    background-color: #2E7D32;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 14px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-#btn-excluir-despesa:hover {
-    background-color: #228B22;
-}

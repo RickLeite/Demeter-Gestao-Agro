@@ -17,6 +17,12 @@ public class IndexController {
         return "cadastro-cliente";
     }
 
+    
+    @GetMapping("/cadastroFeedback")
+    public String cadastroFeedback() {
+        return "cadastroFeedback";
+    }
+
     @GetMapping("/cadastro-vendas")
     public String cadastroVendas() {
         return "cadastro-vendas";

@@ -36,21 +36,9 @@
                     <input type="hidden" id="nome-do-arquivo" name="nomeDoArquivo">
                     <div class="botoes-acao">
                         <button type="submit" id="botao-cadastrar-despesa">Cadastrar Despesa</button>
-                        <button id="btn-ver-detalhes" th:onclick="verDetalhes()">Ver Detalhes</button>
                     </div>
                 </form>
                 <select id="lista-despesas" th:each="despesa : ${despesas}" th:value="${despesa.id}" th:text="${despesa.descricao}"></select>
-            </div>
-        </section>
-        <section class="containerdetalhes-despesa">
-            <h2>Detalhes da Despesa</h2>
-            <div>
-                <p>Data: <span id="detalhes-data"></span></p>
-                <p>Valor: R$ <span id="detalhes-valor"></span></p>
-                <p>Descrição: <span id="detalhes-descricao"></span></p>
-                <p>Pago: <span id="detalhes-pago"></span></p>
-                <p>Anexo: <span id="detalhes-anexo"></span></p>
-                <button id="btn-excluir-despesa" th:onclick="excluirDespesa()">Excluir Despesa</button>
             </div>
         </section>
     </div>
