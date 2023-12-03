@@ -4,11 +4,12 @@ import com.demeter.gestaoagro.model.Estoque;
 import com.demeter.gestaoagro.repository.EstoqueRepository;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -21,6 +22,7 @@ public class EstoqueService {
         this.estoqueRepository = estoqueRepository;
         this.mongoTemplate = mongoTemplate;
     }
+
     public boolean existsById(ObjectId id) {
         return estoqueRepository.existsById(id);
     }
@@ -77,10 +79,16 @@ public class EstoqueService {
 
     public List<Estoque> getLastNEstoque(int count) {
         Pageable pageable = PageRequest.of(0, count, Sort.by(Sort.Order.desc("id.date")));
-
         return estoqueRepository.findAll(pageable).getContent();
     }
 
+    public List<Estoque> getEstoqueByOwner(String owner) {
+        return estoqueRepository.findAllByOwner(owner);
+    }
 
+    public List<Estoque> getEstoqueByNomeProdutoAndOwner(String nomeProduto, String owner) {
+        return estoqueRepository.findByNomeProdutoAndOwner(nomeProduto, owner);
+    }
 }
+
 

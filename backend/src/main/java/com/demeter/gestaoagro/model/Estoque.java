@@ -9,6 +9,8 @@ public class Estoque {
     private int quantidade;
     private double preco;
 
+    private String owner;
+
     public String getId() {
         return id.toHexString();
     }
@@ -35,5 +37,12 @@ public class Estoque {
 
     public void setPreco(double preco) {
         this.preco = preco;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+    public String getOwner() {
+        return owner;
     }
 }

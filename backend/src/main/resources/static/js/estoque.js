@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const listaProdutos = document.getElementById("lista-produtos");
     const voltarButton = document.getElementById("voltar");
 
+    // Fetch all products with the owner parameter when the page is loaded
+    fetchAllProducts();
+
     formCadastro.addEventListener("submit", function (e) {
         e.preventDefault();
 
@@ -15,20 +18,26 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
+        const userEmail = getCookie("userEmail"); // Get the userEmail cookie
+
+        // Log the userEmail to the console for debugging
+        console.log("userEmail:", userEmail);
+
         const produto = {
             nomeProduto: nome,
             quantidade: quantidade,
-            preco: valorUnitario
+            preco: valorUnitario,
+            owner: userEmail // Include owner directly in the produto object
         };
 
         adicionarProdutoAPI(produto);
     });
 
     function adicionarProdutoAPI(produto) {
-        fetch('http://127.0.0.1:3000/estoque/add', {
+        fetch('/estoque/add', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify(produto)
         })
@@ -59,8 +68,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function removeLastEstoqueAPI() {
-        fetch('http://127.0.0.1:3000/estoque/removeLast', {
+        const userEmail = getCookie("userEmail"); // Get the userEmail cookie
+
+        fetch('/estoque/removeLast', { // Relative URL
             method: 'DELETE',
+            headers: {
+                'userEmail': userEmail // Include userEmail cookie in headers
+            }
         })
             .then(response => {
                 if (response.ok) {
@@ -77,4 +91,51 @@ document.addEventListener("DOMContentLoaded", function () {
     voltarButton.addEventListener("click", function () {
         window.location.href = "/perfil.html";
     });
+
+    // Helper function to get cookie value by name
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    // Function to fetch all products with the owner parameter
+    function fetchAllProducts() {
+        const userEmail = getCookie("userEmail"); // Get the userEmail cookie
+
+        // Fetch all products with the owner parameter
+        fetch(`/estoque/byOwner?owner=${userEmail}`)
+            .then(response => response.json())
+            .then(data => {
+                // Process the fetched products and display them in the UI
+                displayProductsInTable(data);
+            })
+            .catch(error => console.error('Erro ao buscar produtos:', error));
+    }
+
+    // Function to display products in the UI table
+    function displayProductsInTable(products) {
+        // Clear existing rows in the table
+        listaProdutos.innerHTML = "";
+
+        // Iterate through each product and add a row to the table
+        products.forEach(product => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${product.nomeProduto}</td>
+                <td>${product.quantidade}</td>
+                <td>${product.preco}</td>
+                <td>
+                    <button class="excluir-button" data-id="${product.id}">Excluir</button>
+                </td>
+            `;
+            listaProdutos.appendChild(row);
+
+            // Add event listener for the delete button
+            const deleteButton = row.querySelector('.excluir-button');
+            deleteButton.addEventListener('click', function () {
+                removeLastEstoqueAPI();
+            });
+        });
+    }
 });

@@ -3,6 +3,7 @@ package com.demeter.gestaoagro.controller;
 import com.demeter.gestaoagro.model.Registro;
 import com.demeter.gestaoagro.service.RegistroService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,8 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.MediaType;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,9 +27,6 @@ public class RegistroController {
     public RegistroController(RegistroService registroService) {
         this.registroService = registroService;
     }
-
-
-    
 
     @GetMapping("/cadastrar")
     public String mostrarFormularioCadastro() {
@@ -48,20 +47,28 @@ public class RegistroController {
     }
 
     @PostMapping("/autenticar")
-public ResponseEntity<?> autenticarRegistro(@RequestBody Registro dadosLogin) {
-    logger.info("Tentativa de autenticação para o email: {}", dadosLogin.getEmail());
-    
-    Registro registroAutenticado = registroService.autenticarRegistro(dadosLogin.getEmail(), dadosLogin.getSenha());
-    if (registroAutenticado != null) {
-        String json = String.format("{\"status\": \"success\", \"redirect\": \"/perfil.html\", \"nome\": \"%s\", \"email\": \"%s\"}", 
-                                    registroAutenticado.getNome(), registroAutenticado.getEmail());
-        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(json);
-    } else {
-        String json = "{\"status\": \"error\", \"message\": \"Usuário ou senha inválidos\"}";
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).contentType(MediaType.APPLICATION_JSON).body(json);
-    }
-}
+    public ResponseEntity<?> autenticarRegistro(@RequestBody Registro dadosLogin, HttpServletResponse response) {
+        logger.info("Tentativa de autenticação para o email: {}", dadosLogin.getEmail());
 
+        Registro registroAutenticado = registroService.autenticarRegistro(dadosLogin.getEmail(), dadosLogin.getSenha());
+        if (registroAutenticado != null) {
+            // Set a cookie with the user's email
+            Cookie emailCookie = new Cookie("userEmail", registroAutenticado.getEmail());
+            emailCookie.setMaxAge(3600); // Set the cookie's expiration time in seconds (1 hour in this example)
+            emailCookie.setPath("/"); // Set the cookie's path to root
+
+            // Add the cookie to the response
+            response.addCookie(emailCookie);
+
+            // Build the JSON response
+            String json = String.format("{\"status\": \"success\", \"redirect\": \"/perfil.html\", \"nome\": \"%s\", \"email\": \"%s\"}",
+                    registroAutenticado.getNome(), registroAutenticado.getEmail());
+            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(json);
+        } else {
+            String json = "{\"status\": \"error\", \"message\": \"Usuário ou senha inválidos\"}";
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).contentType(MediaType.APPLICATION_JSON).body(json);
+        }
+    }
 
     @GetMapping("/listar")
     public String listarRegistros(Model model) {
@@ -126,6 +133,5 @@ public ResponseEntity<?> autenticarRegistro(@RequestBody Registro dadosLogin) {
             return "erro";
         }
     }
-
-    
 }
+

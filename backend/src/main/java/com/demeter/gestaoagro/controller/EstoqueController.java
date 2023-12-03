@@ -68,7 +68,28 @@ public class EstoqueController {
         }
     }
 
+    @GetMapping("/byOwner")
+    public ResponseEntity<List<Estoque>> getEstoqueByOwner(@RequestParam("owner") String owner) {
+        List<Estoque> estoqueList = estoqueService.getEstoqueByOwner(owner);
 
+        if (!estoqueList.isEmpty()) {
+            return new ResponseEntity<>(estoqueList, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/byNomeProdutoAndOwner")
+    public ResponseEntity<List<Estoque>> getEstoqueByNomeProdutoAndOwner(
+            @RequestParam("nomeProduto") String nomeProduto, @RequestParam("owner") String owner) {
+        List<Estoque> estoqueList = estoqueService.getEstoqueByNomeProdutoAndOwner(nomeProduto, owner);
+
+        if (!estoqueList.isEmpty()) {
+            return new ResponseEntity<>(estoqueList, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
     @DeleteMapping("/remove/{id}")
     public ResponseEntity<String> removeEstoqueById(@PathVariable String id) {
@@ -82,7 +103,6 @@ public class EstoqueController {
             return new ResponseEntity<>("No Estoque item found with ID: " + id, HttpStatus.NOT_FOUND);
         }
     }
-
 
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateEstoque(@PathVariable String id, @RequestBody Estoque estoque) {
