@@ -2,10 +2,11 @@ package com.demeter.gestaoagro.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import com.demeter.gestaoagro.model.Venda;
 import org.springframework.web.bind.annotation.*;
+import com.demeter.gestaoagro.model.Venda;
 import com.demeter.gestaoagro.service.CadastroClienteService;
 import com.demeter.gestaoagro.service.VendaService;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -30,9 +31,12 @@ public class VendaController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("CNPJ não encontrado. Cliente não cadastrado.");
             }
 
-            // Gera um código único para a venda
-            String codigoVenda = UUID.randomUUID().toString();
-            venda.setCodigoVenda(codigoVenda);
+            // Certifique-se de que o código de venda foi gerado no front-end ou gere apenas uma vez aqui.
+            if (venda.getCodigoVenda() == null || venda.getCodigoVenda().isEmpty()) {
+                // Gera um código único para a venda
+                String codigoVenda = UUID.randomUUID().toString();
+                venda.setCodigoVenda(codigoVenda);
+            }
 
             vendaService.cadastrarVenda(venda);
             return ResponseEntity.ok("Venda cadastrada com sucesso");

@@ -6,6 +6,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnGerarExcel = document.querySelector('#btnGerarExcel');
     const voltarButton = document.getElementById("voltar");
 
+    // Adicione a função para exibir mensagem de venda cadastrada com sucesso
+    function exibirMensagemCadastro() {
+        const mensagemCadastro = document.getElementById('mensagemCadastro');
+        mensagemCadastro.innerHTML = 'Venda cadastrada com sucesso!';
+        setTimeout(() => {
+            mensagemCadastro.innerHTML = ''; // Limpa a mensagem após alguns segundos
+        }, 3000); // Tempo em milissegundos (3 segundos neste exemplo)
+    }
+
     function obterTodasAsVendas() {
         return fetch('http://localhost:3000/vendas/todas')
             .then(response => {
@@ -39,10 +48,9 @@ document.addEventListener('DOMContentLoaded', function () {
             <td>${venda.codigoVenda}</td>
             <td>${venda.produtos.reduce((total, produto) => total + produto.quantidade, 0)}</td>
             <td>${venda.valorTotal.toFixed(2)}</td>
-            <td>${(venda.produtos[0]?.valorUnitario || 0).toFixed(2)}</td>
             <td>${venda.saleDate}</td>
         `;
-    
+
         return linha;
     }
 
@@ -78,14 +86,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 { text: 'Relatório de Vendas', style: 'header' },
                 {
                     table: {
-                        headers: ['CNPJ', 'Nome Cliente', 'Código da Venda', 'Quantidade', 'Valor Total', 'Valor Unitário', 'Data da Venda'],
+                        headers: ['CNPJ', 'Nome Cliente', 'Código da Venda', 'Quantidade', 'Valor Total', 'Data da Venda'],
                         body: vendas.map(venda => [
                             venda.cnpj,
                             venda.nomeCliente,
                             venda.codigoVenda,
                             venda.produtos.reduce((total, produto) => total + produto.quantidade, 0),
                             venda.valorTotal.toFixed(2),
-                            (venda.produtos[0]?.valorUnitario || 0).toFixed(2),
                             venda.saleDate
                         ])
                     }
@@ -100,10 +107,13 @@ document.addEventListener('DOMContentLoaded', function () {
         };
 
         pdfmake.createPdf(docDefinition).download('relatorio.pdf');
+
+        // Chame a função para exibir a mensagem de venda cadastrada com sucesso
+        exibirMensagemCadastro();
     }
 
     function gerarExcel(vendas) {
-        const excelData = [['CNPJ', 'Nome Cliente', 'Código da Venda', 'Quantidade', 'Valor Total', 'Valor Unitário', 'Data da Venda']];
+        const excelData = [['CNPJ', 'Nome Cliente', 'Código da Venda', 'Quantidade', 'Valor Total', 'Data da Venda']];
 
         vendas.forEach(venda => {
             const vendaData = [
@@ -112,7 +122,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 venda.codigoVenda,
                 venda.produtos.reduce((total, produto) => total + produto.quantidade, 0),
                 venda.valorTotal.toFixed(2),
-                (venda.produtos[0]?.valorUnitario || 0).toFixed(2),
                 venda.saleDate
             ];
 
@@ -124,6 +133,9 @@ document.addEventListener('DOMContentLoaded', function () {
         XLSX.utils.book_append_sheet(wb, ws, 'Relatorio');
 
         XLSX.writeFile(wb, 'relatorio.xlsx');
+
+        // Chame a função para exibir a mensagem de venda cadastrada com sucesso
+        exibirMensagemCadastro();
     }
 
     obterTodasAsVendas();

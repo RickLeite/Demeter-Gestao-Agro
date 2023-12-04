@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class VendaService {
@@ -18,10 +17,6 @@ public class VendaService {
     }
 
     public Optional<Venda> cadastrarVenda(Venda venda) {
-        // Lógica para gerar um ID para a venda.
-        String codigoVenda = UUID.randomUUID().toString();
-        venda.setCodigoVenda(codigoVenda);
-
         return Optional.of(vendaRepository.save(venda));
     }
 
